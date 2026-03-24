@@ -1,5 +1,7 @@
 # profile-title: 🔒 AlexStudio | Белые списки
 # profile-update-interval: 12
 
-vless://d3cecdcf-7fdf-4eae-9f9a-19eac9a16d6a@217.16.28.55:443?security=reality&encryption=none&pbk=OCRYYq4e92sQ-wWFRX6WX9pdvuFBWOqybLhpSiv3nFA&headerType=none&type=tcp&flow=xtls-rprx-vision&sni=5post-gate.x5.ru&sid=111111#%F0%9F%87%B7%F0%9F%87%BA%20Russia%20%7C%20%F0%9F%8C%90%20%5B*CIDR%5D%20VK
-vless://2af2ab91-26b9-4029-b54c-770e21c35ea3@95.163.213.86:443?security=reality&encryption=none&pbk=S652oUHvkqKhAFAuQjBL3p9Hmm23QfULzacbM4SYll4&headerType=none&fp=random&type=tcp&flow=xtls-rprx-vision&sni=eh.vk.com&sid=b92ce31e0e4a8792#%F0%9F%87%B3%F0%9F%87%B1%20The%20Netherlands%20%7C%20%F0%9F%8C%90%20%5B*CIDR%5D%20VK
+vless://eb381b7e-c643-667b-977e-cd52652fd24d@s95358.cdn.ngenix.net:443?path=%2F&security=tls&encryption=none&host=s95358.cdn.ngenix.net&fp=qq&type=ws&sni=s95358.cdn.ngenix.net#%F0%9F%94%91%20%D0%9E%D0%B1%D1%85%D0%BE%D0%B4-5%20%7C%20%D0%B2%D1%81%D0%B5%20%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D1%8B%20%20%28Usr_107000%29%20%5BVLESS%20-%20ws%5D
+vless://eb381b7e-c643-667b-977e-cd52652fd24d@109.120.189.143:48014?security=reality&encryption=none&pbk=J5-ZvlY9EUESyDK6jv2gRkPLKw-HULy8bJU58o_Blmw&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=max.ru&sid=1fbcfafa80e45b24#%F0%9F%94%91%20%D0%9E%D0%B1%D1%85%D0%BE%D0%B4-8
+vless://eb381b7e-c643-667b-977e-cd52652fd24d@37.18.15.242:48014?security=reality&encryption=none&pbk=J5-ZvlY9EUESyDK6jv2gRkPLKw-HULy8bJU58o_Blmw&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=max.ru&sid=1fbcfafa80e45b24#%F0%9F%94%91%20%D0%9E%D0%B1%D1%85%D0%BE%D0%B4-6
+vless://eb381b7e-c643-667b-977e-cd52652fd24d@51.250.14.15:2014?security=reality&encryption=none&pbk=J5-ZvlY9EUESyDK6jv2gRkPLKw-HULy8bJU58o_Blmw&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=travel.yandex.ru&sid=1fbcfafa80e45b24#%D0%9E%D0%B1%D1%85%D0%BE%D0%B4%20RU%20%28MEGA%2C%20MTS%2C%20BEELINE%2C%20TELE2%29
