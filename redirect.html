@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Импорт в v2rayTun</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 90%;
+            width: 400px;
+        }
+        .loading {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        button {
+            background: white;
+            color: #764ba2;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        a {
+            color: white;
+            word-break: break-all;
+        }
+        .link {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🚀 Импорт в v2rayTun</h2>
+        <div class="loading"></div>
+        <p>Перенаправление в приложение...</p>
+        <p>Если ничего не происходит, нажми на кнопку ниже:</p>
+        <button onclick="openApp()">📱 Открыть в v2rayTun</button>
+        <div class="link">
+            <p>Или скопируй ссылку:</p>
+            <a id="subLink" href="#" target="_blank"></a>
+        </div>
+    </div>
+
+    <script>
+        // Получаем ссылку из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const subUrl = urlParams.get('url');
+        
+        if (subUrl) {
+            document.getElementById('subLink').textContent = subUrl;
+            document.getElementById('subLink').href = subUrl;
+            
+            // Пробуем разные форматы
+            const schemes = [
+                `v2raytun://import/sub?url=${encodeURIComponent(subUrl)}`,
+                `v2raytun://import/${encodeURIComponent(subUrl)}`,
+                `v2raytun://install?url=${encodeURIComponent(subUrl)}`
+            ];
+            
+            function tryOpen(index) {
+                if (index >= schemes.length) return;
+                window.location.href = schemes[index];
+                setTimeout(() => tryOpen(index + 1), 500);
+            }
+            
+            // Автоматическая попытка открыть
+            setTimeout(() => tryOpen(0), 500);
+        }
+        
+        function openApp() {
+            if (subUrl) {
+                window.location.href = `v2raytun://import/sub?url=${encodeURIComponent(subUrl)}`;
+                setTimeout(() => {
+                    window.location.href = `v2raytun://import/${encodeURIComponent(subUrl)}`;
+                }, 300);
+            }
+        }
+    </script>
+</body>
+</html>
