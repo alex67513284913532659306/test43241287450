@@ -1,271 +1,391 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Импорт в v2rayTun</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Happ — импорт конфигурации</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
+
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
             min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: white;
-            padding: 16px;
+            background: radial-gradient(circle at 10% 20%, rgba(10, 45, 38, 1) 0%, rgba(5, 25, 22, 1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            position: relative;
         }
-        .container {
-            text-align: center;
-            padding: 2rem 1.5rem;
-            background: rgba(255,255,255,0.08);
-            border-radius: 32px;
-            backdrop-filter: blur(12px);
-            max-width: 90%;
-            width: 480px;
-            border: 1px solid rgba(255,255,255,0.15);
-            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.5);
+
+        /* декоративные элементы */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(42, 157, 143, 0.3) 0%, rgba(72, 201, 176, 0.1) 100%);
+            filter: blur(60px);
+            pointer-events: none;
         }
-        .icon {
-            font-size: 56px;
-            margin-bottom: 16px;
+
+        .glass-card {
+            background: rgba(20, 30, 28, 0.65);
+            backdrop-filter: blur(20px);
+            border-radius: 48px;
+            border: 1px solid rgba(72, 201, 176, 0.25);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(72, 201, 176, 0.1) inset;
+            max-width: 540px;
+            width: 100%;
+            transition: all 0.3s ease;
         }
-        h2 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            font-weight: 600;
+
+        .content {
+            padding: 2rem 1.8rem 2.2rem;
         }
-        .subtitle {
-            opacity: 0.8;
-            margin-bottom: 24px;
+
+        .icon-badge {
+            background: linear-gradient(145deg, #2a9d8f, #1e6b5e);
+            width: 70px;
+            height: 70px;
+            border-radius: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3);
+        }
+
+        .icon-badge span {
+            font-size: 42px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff 30%, #a8e6cf 80%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+        }
+
+        .sub {
+            color: #9ab3a8;
             font-size: 0.9rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px dashed rgba(72, 201, 176, 0.3);
+            display: inline-block;
+            padding-bottom: 0.25rem;
         }
-        .loading {
+
+        .info-panel {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 28px;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-left: 3px solid #2a9d8f;
+            text-align: left;
+        }
+
+        .info-panel p {
+            font-size: 0.85rem;
+            color: #cfe6df;
+            word-break: break-all;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .link-preview {
+            background: #0a1916;
+            border-radius: 24px;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            font-size: 0.7rem;
+            font-family: monospace;
+            color: #9bd9cb;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border: 1px solid rgba(72, 201, 176, 0.3);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 28px 0 20px;
+        }
+
+        .btn {
+            border: none;
+            padding: 14px 20px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(4px);
+            color: white;
+            border: 0.5px solid rgba(255,255,255,0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(100deg, #2a9d8f, #48c9b0);
+            box-shadow: 0 8px 20px -8px rgba(42, 157, 143, 0.5);
+            border: none;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 12px -4px #2a9d8f;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 0.5px solid rgba(72, 201, 176, 0.5);
+        }
+
+        .btn-secondary:active {
+            background: rgba(255, 255, 255, 0.18);
+            transform: scale(0.98);
+        }
+
+        .status {
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 60px;
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 12px;
+            backdrop-filter: blur(4px);
+        }
+
+        .loader {
             width: 44px;
             height: 44px;
-            border: 3px solid rgba(255,255,255,0.2);
-            border-top-color: #fff;
+            border: 2px solid rgba(72, 201, 176, 0.3);
+            border-top-color: #48c9b0;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin: 20px auto;
         }
+
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        .info-box {
-            background: rgba(0,0,0,0.35);
-            padding: 14px;
-            border-radius: 20px;
-            margin: 20px 0;
-            font-size: 13px;
-            word-break: break-all;
-            text-align: left;
-            border-left: 3px solid #7c3aed;
-        }
-        .btn {
-            background: linear-gradient(95deg, #7c3aed, #a855f7);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 60px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin: 8px 0;
-            transition: transform 0.2s, box-shadow 0.2s;
-            width: 100%;
-            max-width: 280px;
-        }
-        .btn:active {
-            transform: scale(0.97);
-        }
-        .btn-secondary {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(4px);
-            margin-top: 8px;
-        }
-        .link-area {
-            background: rgba(0,0,0,0.4);
-            padding: 12px;
-            border-radius: 16px;
-            margin: 16px 0 8px;
-            font-size: 11px;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-break: break-all;
+
+        .footer-note {
+            font-size: 0.7rem;
             text-align: center;
+            margin-top: 1.5rem;
+            color: #6b8b80;
+            border-top: 0.5px solid rgba(72, 201, 176, 0.2);
+            padding-top: 1rem;
         }
-        .link-area a {
-            color: #c084fc;
+
+        a {
+            color: #a8e6cf;
             text-decoration: none;
         }
-        .status {
-            font-size: 14px;
-            margin-top: 16px;
-            padding: 8px;
-            border-radius: 40px;
-            background: rgba(0,0,0,0.3);
-        }
-        .footer {
-            font-size: 11px;
-            margin-top: 24px;
-            opacity: 0.6;
-        }
-        code {
-            background: rgba(0,0,0,0.4);
-            padding: 2px 6px;
-            border-radius: 12px;
-            font-size: 11px;
+
+        button:focus-visible {
+            outline: 2px solid #48c9b0;
         }
     </style>
 </head>
 <body>
-    <div class="container" id="app">
-        <div class="icon">📲</div>
-        <h2>v2rayTun</h2>
-        <div class="subtitle">Импорт конфигурации</div>
-        
-        <div id="loadingArea">
-            <div class="loading"></div>
-            <p>Подготовка к импорту...</p>
+<div class="glass-card">
+    <div class="content">
+        <div class="icon-badge">
+            <span>🌿</span>
         </div>
-        
-        <div id="infoArea" style="display: none;">
-            <div class="info-box" id="fileTypeBox">
-                📄 <strong id="fileType">Файл конфигурации</strong><br>
-                <span id="fileHint"></span>
+        <h1>Happ</h1>
+        <div style="margin-bottom: 0.2rem;"><span class="sub">быстрый импорт</span></div>
+
+        <div id="loadingView" style="text-align: center;">
+            <div class="loader"></div>
+            <p style="margin-top: 12px; color: #9ab3a8;">Анализируем ссылку...</p>
+        </div>
+
+        <div id="mainView" style="display: none;">
+            <div class="info-panel">
+                <strong>📦 Тип:</strong> <span id="fileTypeLabel"></span><br>
+                <span id="fileHintText" style="font-size: 0.8rem;"></span>
+                <div class="link-preview" id="previewLink"></div>
             </div>
-            
-            <button class="btn" id="importBtn">🔗 Импортировать в v2rayTun</button>
-            <button class="btn btn-secondary" id="copyBtn">📋 Скопировать ссылку</button>
-            
-            <div class="link-area">
-                📎 <strong>Прямая ссылка</strong><br>
-                <a id="directLink" href="#" target="_blank"></a>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" id="importServerBtn">
+                    ✨ Добавить сервер в Happ
+                </button>
+                <button class="btn btn-primary" id="importRoutingBtn" style="background: linear-gradient(95deg, #218277, #3ab396);">
+                    🧭 Импортировать маршрутизацию
+                </button>
+                <button class="btn btn-secondary" id="copyServerLinkBtn">
+                    📋 Копировать ссылку сервера
+                </button>
+                <button class="btn btn-secondary" id="copyRoutingLinkBtn">
+                    📄 Копировать ссылку правил
+                </button>
             </div>
-            
+
             <div class="status" id="statusMsg">
-                💡 Нажмите кнопку выше, чтобы открыть в приложении
+                💡 Нажмите кнопку — Happ откроется автоматически
             </div>
         </div>
-        
-        <div class="footer">
-            Поддерживаются подписки, одиночные конфиги и правила маршрутизации
+
+        <div class="footer-note">
+            Поддерживаются VLESS-ссылки, подписки и правила маршрутизации (JSON Base64)<br>
+            <span style="font-size: 0.65rem;">Схемы: happ://add/… , happ://routing/add/…</span>
         </div>
     </div>
+</div>
 
-    <script>
-        // Парсим URL параметры
+<script>
+    (function() {
         const urlParams = new URLSearchParams(window.location.search);
         let targetUrl = urlParams.get('url') || urlParams.get('sub') || urlParams.get('config') || urlParams.get('rules');
         
-        // Если ссылки нет в параметрах, пробуем взять из hash (для старых форматов)
-        if (!targetUrl && window.location.hash) {
-            const hashClean = window.location.hash.substring(1);
-            if (hashClean.startsWith('http')) targetUrl = hashClean;
-        }
-        
-        // Если всё ещё нет — показываем ошибку
-        if (!targetUrl) {
-            document.getElementById('loadingArea').innerHTML = `
-                <div style="color:#ffaa88;">⚠️</div>
-                <p>Не указана ссылка для импорта</p>
-                <p style="font-size:12px;">Используйте: <code>?url=https://...</code></p>
-                <button class="btn" onclick="history.back()">Назад</button>
+        // если передана готовая схема — ничего не делаем, просто показываем
+        if (!targetUrl && window.location.href.includes('happ://')) {
+            document.getElementById('loadingView').innerHTML = `
+                <div style="background:#2a9d8f20; border-radius: 32px; padding: 1rem;">
+                    <span style="font-size: 2rem;">✅</span>
+                    <p style="margin-top: 8px;">Happ уже обрабатывает ссылку</p>
+                    <p style="font-size: 0.75rem;">Если приложение не открылось, нажмите «Открыть в Happ»</p>
+                </div>
             `;
+            return;
+        }
+
+        if (!targetUrl) {
+            document.getElementById('loadingView').innerHTML = `
+                <div style="background:#ffaa8810; border-radius: 32px; padding: 1rem;">
+                    <span style="font-size: 2rem;">⚠️</span>
+                    <p style="margin-top: 8px;">Не указана ссылка для импорта</p>
+                    <p style="font-size: 0.7rem;">Используйте параметр ?url=https://...</p>
+                    <button class="btn btn-secondary" style="margin-top: 16px; padding: 10px 20px;" onclick="history.back()">Назад</button>
+                </div>
+            `;
+            return;
+        }
+
+        // Определяем тип
+        let type = 'server';
+        let fileHint = 'VLESS / VMess / Trojan ссылка';
+        const lower = targetUrl.toLowerCase();
+
+        if (lower.includes('routing') || lower.includes('rules') || lower.includes('route')) {
+            type = 'routing';
+            fileHint = 'Правила маршрутизации (будет импортировано в Happ)';
+        } else if (lower.includes('sub') || lower.includes('subscription')) {
+            type = 'sub';
+            fileHint = 'Подписка (список серверов)';
+        } else if (targetUrl.startsWith('vless://') || targetUrl.startsWith('vmess://') || targetUrl.startsWith('trojan://')) {
+            type = 'server';
+            fileHint = 'Одиночный протокол — будет добавлен как сервер';
+        }
+
+        document.getElementById('fileTypeLabel').innerText = type === 'routing' ? '🧩 Правила маршрутизации' : (type === 'sub' ? '📡 Подписка' : '🔗 Сервер / конфигурация');
+        document.getElementById('fileHintText').innerText = fileHint;
+        document.getElementById('previewLink').innerText = targetUrl.length > 90 ? targetUrl.slice(0, 90) + '…' : targetUrl;
+
+        // Генерируем схемы Happ
+        let serverHappUrl = '';
+        let routingHappUrl = '';
+
+        if (type === 'routing') {
+            // для правил пробуем напрямую как routing/add
+            routingHappUrl = `happ://routing/add/${encodeURIComponent(targetUrl)}`;
+            serverHappUrl = `happ://add/${encodeURIComponent(targetUrl)}`; // fallback
         } else {
-            // Определяем тип контента по расширению или названию
-            let fileType = 'config';
-            let fileHint = 'Стандартная конфигурация';
-            const lowerUrl = targetUrl.toLowerCase();
-            
-            if (lowerUrl.includes('routing') || lowerUrl.includes('rules') || lowerUrl.includes('route')) {
-                fileType = 'rules';
-                fileHint = 'Правила маршрутизации (раздельное туннелирование)';
-            } else if (lowerUrl.includes('sub') || lowerUrl.includes('subscription')) {
-                fileType = 'sub';
-                fileHint = 'Подписка (список серверов)';
-            } else if (lowerUrl.endsWith('.json')) {
-                fileType = 'json';
-                fileHint = 'JSON-конфигурация';
-            } else if (lowerUrl.includes('vmess') || lowerUrl.includes('vless') || lowerUrl.includes('trojan')) {
-                fileType = 'single';
-                fileHint = 'Одиночный протокол';
-            }
-            
-            document.getElementById('fileType').innerText = 
-                fileType === 'rules' ? '📋 Правила маршрутизации' :
-                fileType === 'sub' ? '📡 Подписка' :
-                '⚙️ Конфигурация';
-            document.getElementById('fileHint').innerText = fileHint;
-            document.getElementById('directLink').innerText = targetUrl;
-            document.getElementById('directLink').href = targetUrl;
-            
-            // Генерация правильной v2raytun-схемы
-            let v2raytunUrl = '';
-            if (fileType === 'rules') {
-                v2raytunUrl = `v2raytun://import/rules?url=${encodeURIComponent(targetUrl)}`;
-            } else if (fileType === 'sub') {
-                v2raytunUrl = `v2raytun://import/sub?url=${encodeURIComponent(targetUrl)}`;
+            // для подписки или одиночной ссылки — добавление сервера
+            serverHappUrl = `happ://add/${encodeURIComponent(targetUrl)}`;
+            // если это JSON-файл с правилами, можно предложить и routing
+            if (lower.endsWith('.json') && (lower.includes('routing') || lower.includes('rules'))) {
+                routingHappUrl = `happ://routing/add/${encodeURIComponent(targetUrl)}`;
             } else {
-                // для одиночных конфигов и json
-                v2raytunUrl = `v2raytun://import/config?url=${encodeURIComponent(targetUrl)}`;
+                routingHappUrl = '';
             }
-            
-            // Кнопка импорта
-            const importBtn = document.getElementById('importBtn');
-            importBtn.onclick = () => {
-                window.location.href = v2raytunUrl;
-                document.getElementById('statusMsg').innerHTML = '✅ Открываем v2rayTun...<br>Если приложение не открылось, проверьте установку.';
-                setTimeout(() => {
-                    document.getElementById('statusMsg').innerHTML = '🔄 Если ничего не произошло, нажмите кнопку ещё раз или скопируйте ссылку вручную.';
-                }, 2000);
-            };
-            
-            // Копирование ссылки
-            const copyBtn = document.getElementById('copyBtn');
-            copyBtn.onclick = async () => {
-                try {
-                    await navigator.clipboard.writeText(v2raytunUrl);
-                    document.getElementById('statusMsg').innerHTML = '✅ Ссылка скопирована! Откройте v2rayTun и используйте "Импорт из буфера".';
-                    setTimeout(() => {
-                        document.getElementById('statusMsg').innerHTML = '💡 Нажмите кнопку выше, чтобы открыть в приложении';
-                    }, 3000);
-                } catch(e) {
-                    document.getElementById('statusMsg').innerHTML = '❌ Не удалось скопировать, выделите ссылку вручную.';
-                }
-            };
-            
-            // Прямая ссылка на файл тоже должна быть видна
-            document.getElementById('directLink').href = targetUrl;
-            
-            // Скрыть загрузку и показать интерфейс
-            document.getElementById('loadingArea').style.display = 'none';
-            document.getElementById('infoArea').style.display = 'block';
-            
-            // Автоматическая попытка открыть приложение через 300ms (для удобства)
+        }
+
+        // Кнопки
+        const importServerBtn = document.getElementById('importServerBtn');
+        const importRoutingBtn = document.getElementById('importRoutingBtn');
+        const copyServerLinkBtn = document.getElementById('copyServerLinkBtn');
+        const copyRoutingLinkBtn = document.getElementById('copyRoutingLinkBtn');
+        const statusDiv = document.getElementById('statusMsg');
+
+        function openHapp(url, successMsg) {
+            if (!url) {
+                statusDiv.innerHTML = '⚠️ Не удалось сформировать ссылку для этого типа';
+                return;
+            }
+            window.location.href = url;
+            statusDiv.innerHTML = successMsg + '<br>🔄 Если приложение не открылось, проверьте установку Happ';
             setTimeout(() => {
-                try {
-                    window.location.href = v2raytunUrl;
-                } catch(e) {}
-            }, 400);
+                if (statusDiv.innerHTML.includes('Если приложение')) {
+                    statusDiv.innerHTML = '💡 Нажмите кнопку ещё раз или скопируйте ссылку вручную';
+                }
+            }, 2500);
         }
-        
-        // Функция для ручного копирования ссылки на случай, если clipboard не сработал
-        function fallbackCopy(text) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
+
+        function copyToClipboard(text, msg) {
+            if (!text) {
+                statusDiv.innerHTML = '❌ Нет ссылки для копирования';
+                return;
+            }
+            navigator.clipboard.writeText(text).then(() => {
+                statusDiv.innerHTML = msg;
+                setTimeout(() => {
+                    if (statusDiv.innerHTML === msg) statusDiv.innerHTML = '💡 Готово!';
+                }, 2000);
+            }).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                statusDiv.innerHTML = msg;
+            });
         }
-    </script>
+
+        importServerBtn.onclick = () => openHapp(serverHappUrl, '✅ Открываем Happ и добавляем сервер...');
+        importRoutingBtn.onclick = () => openHapp(routingHappUrl || serverHappUrl, '🧭 Импортируем маршрутизацию...');
+        copyServerLinkBtn.onclick = () => copyToClipboard(serverHappUrl, '📋 Ссылка на сервер скопирована!');
+        copyRoutingLinkBtn.onclick = () => copyToClipboard(routingHappUrl || serverHappUrl, '📋 Ссылка на правила скопирована!');
+
+        if (!routingHappUrl) {
+            importRoutingBtn.style.opacity = '0.6';
+            importRoutingBtn.style.pointerEvents = 'none';
+            importRoutingBtn.title = 'Для этого файла не определены правила маршрутизации';
+        }
+
+        // Показываем интерфейс
+        document.getElementById('loadingView').style.display = 'none';
+        document.getElementById('mainView').style.display = 'block';
+
+        // небольшая авто-попытка для сервера, если это удобно (через 0.5 сек)
+        setTimeout(() => {
+            if (serverHappUrl && !window.location.href.includes('happ://')) {
+                // не авторедирект, но даём пользователю кнопки
+            }
+        }, 500);
+    })();
+</script>
 </body>
 </html>
