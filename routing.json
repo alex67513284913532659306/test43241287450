@@ -1,22 +1,17 @@
-{
-  "routing": {
-    "mode": "exclude",
-    "rules": [
-      {
-        "type": "field",
-        "domain": [".ru", ".рф", ".su", ".by", "vk.com", "ok.ru", "yandex.ru", "ya.ru", "ozon.ru", "wildberries.ru", "avito.ru"],
-        "outboundTag": "direct"
-      },
-      {
-        "type": "field",
-        "apps": ["ru.sberbankmobile", "ru.tinkoff.android", "ru.vtb.mobile", "ru.alfabank.mobile", "ru.gazprombank.mobile", "com.ozon.mobile", "com.wildberries.ru", "com.avito.android", "ru.yandex.market", "ru.yandex.taxi", "ru.yandex.eda", "ru.yandex.delivery", "com.vk.client", "com.odnoklassniki", "ru.deliveryclub"],
-        "outboundTag": "direct"
-      },
-      {
-        "type": "field",
-        "network": "tcp,udp",
-        "outboundTag": "proxy"
-      }
-    ]
+[
+  {
+    "type": "field",
+    "domain": [".ru", ".рф", ".su", ".by", "vk.com", "ok.ru", "yandex.ru", "ya.ru", "ozon.ru", "wildberries.ru", "avito.ru"],
+    "outboundTag": "direct"
+  },
+  {
+    "type": "field",
+    "apps": ["ru.sberbankmobile", "ru.tinkoff.android", "ru.vtb.mobile", "ru.alfabank.mobile", "ru.gazprombank.mobile", "com.ozon.mobile", "com.wildberries.ru", "com.avito.android", "ru.yandex.market", "ru.yandex.taxi", "ru.yandex.eda", "ru.yandex.delivery", "com.vk.client", "com.odnoklassniki", "ru.deliveryclub"],
+    "outboundTag": "direct"
+  },
+  {
+    "type": "field",
+    "network": "tcp,udp",
+    "outboundTag": "proxy"
   }
-}
+]
