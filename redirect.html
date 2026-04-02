@@ -356,10 +356,9 @@
     (function() {
         // === ПОЛНЫЙ КОНТРОЛЬ: НЕТ АВТОМАТИЧЕСКОГО РЕДИРЕКТА ===
         // Формируем целевую ссылку для v2raytun (можно расширить параметрами из URL)
-        // Базовая схема: v2raytun://import?url=... либо просто v2raytun://
-        // Для совместимости с реальными конфигами — читаем параметры из адресной строки, если они есть
+        // Базовая схема: v2raytun://import/... либо просто v2raytun://import/
         
-        let targetV2RayUrl = 'v2raytun://';  // базовая схема по умолчанию
+        let targetV2RayUrl = 'v2raytun://import/';  // базовая схема по умолчанию (импорт)
         
         // Пытаемся извлечь параметры url/sub из GET-параметров текущей страницы
         const urlParams = new URLSearchParams(window.location.search);
@@ -369,14 +368,14 @@
         if (externalUrl && externalUrl.trim() !== '') {
             // Кодируем внешний ресурс для безопасной передачи
             const encodedConfig = encodeURIComponent(externalUrl);
-            // Поддержка как для импорта сервера, так и для подписок (v2raytun понимает add или import)
-            targetV2RayUrl = `v2raytun://add/${encodedConfig}`;
+            // Правильная схема v2raytun: import
+            targetV2RayUrl = `v2raytun://import/${encodedConfig}`;
             // Также показываем в превью что будет передан параметр
-            document.getElementById('previewUrl').innerHTML = `🔗 v2raytun://add/... (конфиг: ${externalUrl.length > 50 ? externalUrl.slice(0, 50) + '…' : externalUrl})`;
+            document.getElementById('previewUrl').innerHTML = `🔗 v2raytun://import/... (конфиг: ${externalUrl.length > 50 ? externalUrl.slice(0, 50) + '…' : externalUrl})`;
         } else {
-            // Если нет внешнего URL — просто открываем приложение (главный экран v2raytun)
-            targetV2RayUrl = 'v2raytun://';
-            document.getElementById('previewUrl').innerHTML = `📱 v2raytun:// (главный экран)`;
+            // Если нет внешнего URL — открываем приложение с экраном импорта
+            targetV2RayUrl = 'v2raytun://import/';
+            document.getElementById('previewUrl').innerHTML = `📱 v2raytun://import/ (экран импорта)`;
         }
         
         // Дополнительно поддерживаем явный параметр rules для маршрутизации (опционально)
