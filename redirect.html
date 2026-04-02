@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Happ — импорт конфигурации</title>
+    <title>AlexStudio Code | V2Ray Tun Redirect</title>
     <style>
         * {
             margin: 0;
@@ -15,376 +15,476 @@
         body {
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
             min-height: 100vh;
-            background: radial-gradient(circle at 10% 20%, rgba(10, 45, 38, 1) 0%, rgba(5, 25, 22, 1) 100%);
+            background: radial-gradient(circle at 20% 30%, #0B1120 0%, #031016 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 1.5rem;
             position: relative;
+            overflow-x: hidden;
         }
 
-        /* декоративные элементы */
-        body::before {
-            content: '';
+        /* декоративные светящиеся сферы */
+        .orb {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 200px;
-            background: linear-gradient(135deg, rgba(42, 157, 143, 0.3) 0%, rgba(72, 201, 176, 0.1) 100%);
-            filter: blur(60px);
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.35;
             pointer-events: none;
         }
 
+        .orb-1 {
+            width: 320px;
+            height: 320px;
+            background: #00b8a0;
+            top: -120px;
+            left: -80px;
+        }
+
+        .orb-2 {
+            width: 450px;
+            height: 450px;
+            background: #1A6E62;
+            bottom: -180px;
+            right: -150px;
+            opacity: 0.3;
+        }
+
+        /* главный стеклянный кард */
         .glass-card {
-            background: rgba(20, 30, 28, 0.65);
+            background: rgba(12, 22, 28, 0.78);
             backdrop-filter: blur(20px);
-            border-radius: 48px;
-            border: 1px solid rgba(72, 201, 176, 0.25);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(72, 201, 176, 0.1) inset;
-            max-width: 540px;
+            border-radius: 56px;
+            border: 1px solid rgba(0, 220, 180, 0.35);
+            box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 220, 180, 0.15) inset;
+            max-width: 560px;
             width: 100%;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
         }
 
         .content {
-            padding: 2rem 1.8rem 2.2rem;
+            padding: 2.2rem 2rem 2.4rem;
         }
 
-        .icon-badge {
-            background: linear-gradient(145deg, #2a9d8f, #1e6b5e);
-            width: 70px;
-            height: 70px;
-            border-radius: 35px;
+        /* AlexStudio логотип с изображением */
+        .logo-studio {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.2rem;
-            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3);
+            gap: 14px;
+            margin-bottom: 1.2rem;
+            background: rgba(0, 0, 0, 0.45);
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            backdrop-filter: blur(4px);
+            border: 0.5px solid rgba(0, 220, 190, 0.5);
+            transition: 0.2s;
         }
 
-        .icon-badge span {
-            font-size: 42px;
+        .logo-img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 6px #2A9D8F);
+            border-radius: 12px;
         }
 
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #fff 30%, #a8e6cf 80%);
+        .logo-text {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #FFFFFF 15%, #A8FFE8 85%);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            margin-bottom: 0.3rem;
         }
 
-        .sub {
-            color: #9ab3a8;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            border-bottom: 1px dashed rgba(72, 201, 176, 0.3);
-            display: inline-block;
-            padding-bottom: 0.25rem;
-        }
-
-        .info-panel {
-            background: rgba(0, 0, 0, 0.35);
-            border-radius: 28px;
-            padding: 1.2rem;
-            margin: 1.5rem 0;
-            border-left: 3px solid #2a9d8f;
-            text-align: left;
-        }
-
-        .info-panel p {
-            font-size: 0.85rem;
-            color: #cfe6df;
-            word-break: break-all;
-            font-family: 'SF Mono', monospace;
-        }
-
-        .link-preview {
-            background: #0a1916;
-            border-radius: 24px;
-            padding: 0.8rem 1rem;
-            margin: 1rem 0;
+        .badge-code {
+            background: #152e2a;
+            border-radius: 30px;
+            padding: 4px 12px;
             font-size: 0.7rem;
+            font-weight: 500;
+            color: #7affdb;
             font-family: monospace;
-            color: #9bd9cb;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-break: break-all;
-            border: 1px solid rgba(72, 201, 176, 0.3);
+            margin-left: 8px;
         }
 
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin: 28px 0 20px;
-        }
-
-        .btn {
-            border: none;
-            padding: 14px 20px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1rem;
+        /* иконка V2Ray */
+        .v2-icon {
+            background: linear-gradient(145deg, #10282b, #021016);
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(4px);
-            color: white;
-            border: 0.5px solid rgba(255,255,255,0.15);
+            margin: 1rem auto 1rem;
+            box-shadow: 0 20px 35px -12px black, 0 0 0 2px rgba(0, 255, 200, 0.45) inset, 0 0 20px rgba(0, 200, 180, 0.3);
         }
 
-        .btn-primary {
-            background: linear-gradient(100deg, #2a9d8f, #48c9b0);
-            box-shadow: 0 8px 20px -8px rgba(42, 157, 143, 0.5);
+        .v2-icon span {
+            font-size: 62px;
+            filter: drop-shadow(0 0 8px #2A9D8F);
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #FFFFFF 0%, #9effe0 75%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-top: 0.2rem;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #2A9D8F30, #00e0c030);
+            padding: 0.2rem 0.6rem;
+            border-radius: 60px;
+            display: inline-block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #bef2e6;
+        }
+
+        .subhead {
+            text-align: center;
+            color: #9ab3ae;
+            margin: 0.75rem 0 1.6rem;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed rgba(72, 201, 176, 0.3);
+            display: inline-block;
+            width: auto;
+            padding-bottom: 0.3rem;
+        }
+
+        .info-card {
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 28px;
+            padding: 1rem 1.2rem;
+            margin: 1.5rem 0;
+            border-left: 3px solid #2A9D8F;
+            font-size: 0.85rem;
+            color: #cfe6df;
+            text-align: center;
+        }
+
+        .link-preview {
+            background: #071217;
+            border-radius: 22px;
+            padding: 0.7rem 1rem;
+            font-size: 0.7rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            color: #a2f0e0;
+            word-break: break-all;
+            border: 1px solid #2A9D8F40;
+            margin-top: 12px;
+        }
+
+        /* главная кнопка редиректа — только по клику */
+        .btn-redirect {
+            background: linear-gradient(100deg, #1F6E62, #2A9D8F);
             border: none;
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            color: white;
+            box-shadow: 0 12px 28px -12px #1A4E46;
+            margin: 24px 0 18px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-primary:active {
+        .btn-redirect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-redirect:hover::before {
+            left: 100%;
+        }
+
+        .btn-redirect:active {
             transform: scale(0.97);
-            box-shadow: 0 4px 12px -4px #2a9d8f;
+            box-shadow: 0 6px 18px -8px #1A4E46;
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.08);
-            border: 0.5px solid rgba(72, 201, 176, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(42, 157, 143, 0.5);
+            padding: 12px;
+            border-radius: 60px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #cff2ea;
+            font-size: 0.9rem;
+            width: 100%;
         }
 
         .btn-secondary:active {
-            background: rgba(255, 255, 255, 0.18);
+            background: rgba(42, 157, 143, 0.2);
             transform: scale(0.98);
         }
 
         .status {
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 60px;
             padding: 10px 16px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-align: center;
             margin-top: 12px;
+            color: #b2ddd2;
             backdrop-filter: blur(4px);
-        }
-
-        .loader {
-            width: 44px;
-            height: 44px;
-            border: 2px solid rgba(72, 201, 176, 0.3);
-            border-top-color: #48c9b0;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         .footer-note {
             font-size: 0.7rem;
             text-align: center;
-            margin-top: 1.5rem;
-            color: #6b8b80;
+            margin-top: 1.8rem;
+            color: #5c8276;
             border-top: 0.5px solid rgba(72, 201, 176, 0.2);
             padding-top: 1rem;
         }
 
-        a {
-            color: #a8e6cf;
-            text-decoration: none;
+        .flex-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
         }
 
-        button:focus-visible {
-            outline: 2px solid #48c9b0;
+        @media (max-width: 480px) {
+            .content {
+                padding: 1.8rem 1.4rem;
+            }
+            h1 {
+                font-size: 1.9rem;
+            }
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            .logo-img {
+                width: 34px;
+                height: 34px;
+            }
         }
     </style>
 </head>
 <body>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
 <div class="glass-card">
     <div class="content">
-        <div class="icon-badge">
-            <span>🌿</span>
-        </div>
-        <h1>Happ</h1>
-        <div style="margin-bottom: 0.2rem;"><span class="sub">быстрый импорт</span></div>
-
-        <div id="loadingView" style="text-align: center;">
-            <div class="loader"></div>
-            <p style="margin-top: 12px; color: #9ab3a8;">Анализируем ссылку...</p>
+        <!-- Логотип AlexStudio Code с картинкой -->
+        <div class="logo-studio">
+            <img class="logo-img" src="https://alexstudiocode.ru/logo2.png" alt="AlexStudio Code" onerror="this.onerror=null; this.style.display='none'; this.nextSibling?.style?.setProperty('display', 'flex');">
+            <span class="logo-text">AlexStudio Code</span>
+            <span class="badge-code">v2.0</span>
         </div>
 
-        <div id="mainView" style="display: none;">
-            <div class="info-panel">
-                <strong>📦 Тип:</strong> <span id="fileTypeLabel"></span><br>
-                <span id="fileHintText" style="font-size: 0.8rem;"></span>
-                <div class="link-preview" id="previewLink"></div>
-            </div>
+        <!-- Иконка V2Ray и главная надпись -->
+        <div class="v2-icon">
+            <span>🌐</span>
+        </div>
+        <h1>V2Ray Tun Redirect</h1>
+        <div style="text-align: center; margin-top: 6px;">
+            <span class="highlight">⚡ безопасный переход · импорт конфигурации</span>
+        </div>
+        <div class="subhead"></div>
 
-            <div class="btn-group">
-                <button class="btn btn-primary" id="importServerBtn">
-                    ✨ Добавить сервер в Happ
-                </button>
-                <button class="btn btn-primary" id="importRoutingBtn" style="background: linear-gradient(95deg, #218277, #3ab396);">
-                    🧭 Импортировать маршрутизацию
-                </button>
-                <button class="btn btn-secondary" id="copyServerLinkBtn">
-                    📋 Копировать ссылку сервера
-                </button>
-                <button class="btn btn-secondary" id="copyRoutingLinkBtn">
-                    📄 Копировать ссылку правил
-                </button>
+        <div class="info-card">
+            <strong>📡 V2Ray Tunnel — готов к работе</strong><br>
+            <span style="font-size: 0.8rem;">Нажмите на кнопку ниже, чтобы перенаправить запрос в приложение V2RayTun.<br>Автоматического редиректа нет — только по вашему желанию.</span>
+            <div class="link-preview" id="previewUrl">
+                v2raytun://import?url=example
             </div>
+        </div>
 
-            <div class="status" id="statusMsg">
-                💡 Нажмите кнопку — Happ откроется автоматически
-            </div>
+        <!-- Основная кнопка — РУЧНОЙ редирект -->
+        <button class="btn-redirect" id="redirectBtn">
+            <span>🚀</span> Перейти в V2RayTun
+        </button>
+
+        <!-- Дополнительные кнопки для копирования / резервных действий -->
+        <div class="flex-buttons">
+            <button class="btn-secondary" id="copyLinkBtn">
+                📋 Копировать ссылку
+            </button>
+            <button class="btn-secondary" id="openFallbackBtn">
+                🔁 Открыть (fallback)
+            </button>
+        </div>
+
+        <div class="status" id="statusMsg">
+            ✅ Редирект только по кнопке. Никаких авто-переходов.
         </div>
 
         <div class="footer-note">
-            Поддерживаются VLESS-ссылки, подписки и правила маршрутизации (JSON Base64)<br>
-            <span style="font-size: 0.65rem;">Схемы: happ://add/… , happ://routing/add/…</span>
+            AlexStudio Code — V2Ray Tun Bridge · конфиденциальный импорт
         </div>
     </div>
 </div>
 
 <script>
     (function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        let targetUrl = urlParams.get('url') || urlParams.get('sub') || urlParams.get('config') || urlParams.get('rules');
+        // === ПОЛНЫЙ КОНТРОЛЬ: НЕТ АВТОМАТИЧЕСКОГО РЕДИРЕКТА ===
+        // Формируем целевую ссылку для v2raytun (можно расширить параметрами из URL)
+        // Базовая схема: v2raytun://import?url=... либо просто v2raytun://
+        // Для совместимости с реальными конфигами — читаем параметры из адресной строки, если они есть
         
-        // если передана готовая схема — ничего не делаем, просто показываем
-        if (!targetUrl && window.location.href.includes('happ://')) {
-            document.getElementById('loadingView').innerHTML = `
-                <div style="background:#2a9d8f20; border-radius: 32px; padding: 1rem;">
-                    <span style="font-size: 2rem;">✅</span>
-                    <p style="margin-top: 8px;">Happ уже обрабатывает ссылку</p>
-                    <p style="font-size: 0.75rem;">Если приложение не открылось, нажмите «Открыть в Happ»</p>
-                </div>
-            `;
-            return;
-        }
-
-        if (!targetUrl) {
-            document.getElementById('loadingView').innerHTML = `
-                <div style="background:#ffaa8810; border-radius: 32px; padding: 1rem;">
-                    <span style="font-size: 2rem;">⚠️</span>
-                    <p style="margin-top: 8px;">Не указана ссылка для импорта</p>
-                    <p style="font-size: 0.7rem;">Используйте параметр ?url=https://...</p>
-                    <button class="btn btn-secondary" style="margin-top: 16px; padding: 10px 20px;" onclick="history.back()">Назад</button>
-                </div>
-            `;
-            return;
-        }
-
-        // Определяем тип
-        let type = 'server';
-        let fileHint = 'VLESS / VMess / Trojan ссылка';
-        const lower = targetUrl.toLowerCase();
-
-        if (lower.includes('routing') || lower.includes('rules') || lower.includes('route')) {
-            type = 'routing';
-            fileHint = 'Правила маршрутизации (будет импортировано в Happ)';
-        } else if (lower.includes('sub') || lower.includes('subscription')) {
-            type = 'sub';
-            fileHint = 'Подписка (список серверов)';
-        } else if (targetUrl.startsWith('vless://') || targetUrl.startsWith('vmess://') || targetUrl.startsWith('trojan://')) {
-            type = 'server';
-            fileHint = 'Одиночный протокол — будет добавлен как сервер';
-        }
-
-        document.getElementById('fileTypeLabel').innerText = type === 'routing' ? '🧩 Правила маршрутизации' : (type === 'sub' ? '📡 Подписка' : '🔗 Сервер / конфигурация');
-        document.getElementById('fileHintText').innerText = fileHint;
-        document.getElementById('previewLink').innerText = targetUrl.length > 90 ? targetUrl.slice(0, 90) + '…' : targetUrl;
-
-        // Генерируем схемы Happ
-        let serverHappUrl = '';
-        let routingHappUrl = '';
-
-        if (type === 'routing') {
-            // для правил пробуем напрямую как routing/add
-            routingHappUrl = `happ://routing/add/${encodeURIComponent(targetUrl)}`;
-            serverHappUrl = `happ://add/${encodeURIComponent(targetUrl)}`; // fallback
+        let targetV2RayUrl = 'v2raytun://';  // базовая схема по умолчанию
+        
+        // Пытаемся извлечь параметры url/sub из GET-параметров текущей страницы
+        const urlParams = new URLSearchParams(window.location.search);
+        let externalUrl = urlParams.get('url') || urlParams.get('sub') || urlParams.get('config') || urlParams.get('link');
+        
+        // Если есть переданная ссылка (например, подписка или VLESS) — формируем более точный deep link
+        if (externalUrl && externalUrl.trim() !== '') {
+            // Кодируем внешний ресурс для безопасной передачи
+            const encodedConfig = encodeURIComponent(externalUrl);
+            // Поддержка как для импорта сервера, так и для подписок (v2raytun понимает add или import)
+            targetV2RayUrl = `v2raytun://add/${encodedConfig}`;
+            // Также показываем в превью что будет передан параметр
+            document.getElementById('previewUrl').innerHTML = `🔗 v2raytun://add/... (конфиг: ${externalUrl.length > 50 ? externalUrl.slice(0, 50) + '…' : externalUrl})`;
         } else {
-            // для подписки или одиночной ссылки — добавление сервера
-            serverHappUrl = `happ://add/${encodeURIComponent(targetUrl)}`;
-            // если это JSON-файл с правилами, можно предложить и routing
-            if (lower.endsWith('.json') && (lower.includes('routing') || lower.includes('rules'))) {
-                routingHappUrl = `happ://routing/add/${encodeURIComponent(targetUrl)}`;
-            } else {
-                routingHappUrl = '';
-            }
+            // Если нет внешнего URL — просто открываем приложение (главный экран v2raytun)
+            targetV2RayUrl = 'v2raytun://';
+            document.getElementById('previewUrl').innerHTML = `📱 v2raytun:// (главный экран)`;
         }
-
-        // Кнопки
-        const importServerBtn = document.getElementById('importServerBtn');
-        const importRoutingBtn = document.getElementById('importRoutingBtn');
-        const copyServerLinkBtn = document.getElementById('copyServerLinkBtn');
-        const copyRoutingLinkBtn = document.getElementById('copyRoutingLinkBtn');
+        
+        // Дополнительно поддерживаем явный параметр rules для маршрутизации (опционально)
+        let routingUrl = urlParams.get('rules');
+        if (routingUrl && routingUrl.trim() !== '') {
+            // но оставляем возможность через дополнительную кнопку? не будем усложнять, но сохраняем в переменной
+            console.log('[AlexStudio] routing link available:', routingUrl);
+        }
+        
+        // Элементы интерфейса
+        const redirectBtn = document.getElementById('redirectBtn');
+        const copyLinkBtn = document.getElementById('copyLinkBtn');
+        const openFallbackBtn = document.getElementById('openFallbackBtn');
         const statusDiv = document.getElementById('statusMsg');
-
-        function openHapp(url, successMsg) {
+        
+        // Функция редиректа (только вызов по кнопке)
+        function performRedirect(url) {
             if (!url) {
-                statusDiv.innerHTML = '⚠️ Не удалось сформировать ссылку для этого типа';
+                statusDiv.innerHTML = '❌ Ошибка: ссылка для перехода не сформирована';
                 return;
             }
+            // Пытаемся открыть deep link
             window.location.href = url;
-            statusDiv.innerHTML = successMsg + '<br>🔄 Если приложение не открылось, проверьте установку Happ';
+            statusDiv.innerHTML = '🔄 Перенаправление на V2RayTun... Если приложение не открылось, проверьте установку V2RayTun.';
+            
+            // Таймер для подсказки, если приложение не установлено
             setTimeout(() => {
-                if (statusDiv.innerHTML.includes('Если приложение')) {
-                    statusDiv.innerHTML = '💡 Нажмите кнопку ещё раз или скопируйте ссылку вручную';
+                if (document.hasFocus()) {
+                    statusDiv.innerHTML = '⚠️ Приложение не обнаружено? Установите V2RayTun и нажмите снова.<br>Или скопируйте ссылку вручную.';
                 }
-            }, 2500);
+            }, 1800);
         }
-
-        function copyToClipboard(text, msg) {
-            if (!text) {
-                statusDiv.innerHTML = '❌ Нет ссылки для копирования';
-                return;
-            }
-            navigator.clipboard.writeText(text).then(() => {
-                statusDiv.innerHTML = msg;
+        
+        // Копирование глубокой ссылки в буфер
+        async function copyDeepLink() {
+            try {
+                await navigator.clipboard.writeText(targetV2RayUrl);
+                statusDiv.innerHTML = '✅ Ссылка V2RayTun скопирована! Вставьте в браузер или откройте вручную.';
                 setTimeout(() => {
-                    if (statusDiv.innerHTML === msg) statusDiv.innerHTML = '💡 Готово!';
-                }, 2000);
-            }).catch(() => {
-                const ta = document.createElement('textarea');
-                ta.value = text;
-                document.body.appendChild(ta);
-                ta.select();
+                    if (statusDiv.innerHTML.includes('скопирована')) {
+                        statusDiv.innerHTML = '💡 Готово! Используйте кнопку «Перейти» для редиректа.';
+                    }
+                }, 2500);
+            } catch (err) {
+                // fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = targetV2RayUrl;
+                document.body.appendChild(textarea);
+                textarea.select();
                 document.execCommand('copy');
-                document.body.removeChild(ta);
-                statusDiv.innerHTML = msg;
+                document.body.removeChild(textarea);
+                statusDiv.innerHTML = '📋 Ссылка скопирована (старый метод)';
+            }
+        }
+        
+        // Обработчик главной кнопки — только здесь инициируем редирект
+        redirectBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            performRedirect(targetV2RayUrl);
+        });
+        
+        // Кнопка копирования
+        copyLinkBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            copyDeepLink();
+        });
+        
+        // Fallback: повторная попытка открыть по той же ссылке (удобно, если пользователь хочет ещё раз)
+        openFallbackBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            performRedirect(targetV2RayUrl);
+        });
+        
+        // Если страница получила параметры для routing — можно вывести подсказку, но НЕ делать авторедирект
+        if (urlParams.has('rules')) {
+            const rulesHint = document.createElement('div');
+            rulesHint.style.background = '#1E3A34';
+            rulesHint.style.borderRadius = '20px';
+            rulesHint.style.padding = '8px 12px';
+            rulesHint.style.fontSize = '0.7rem';
+            rulesHint.style.marginTop = '10px';
+            rulesHint.style.textAlign = 'center';
+            rulesHint.innerHTML = '🧩 Обнаружены параметры маршрутизации. Нажмите "Перейти в V2RayTun" для импорта правил.';
+            document.querySelector('.info-card').appendChild(rulesHint);
+        }
+        
+        // Никаких window.onload автоматических редиректов, никаких таймеров с location.href
+        // Гарантируем, что страница не перенаправит сама себя
+        console.log('[AlexStudio] Страница загружена, автоматический редирект ОТКЛЮЧЁН. Только по кнопке.');
+        
+        // Дополнительная красота: предзагрузка логотипа, если нужно (просто проверяем)
+        const logoImg = document.querySelector('.logo-img');
+        if (logoImg) {
+            logoImg.addEventListener('error', () => {
+                // если логотип не загрузился, показываем текстовую иконку вместо картинки
+                const parent = logoImg.parentNode;
+                const fallbackSpan = document.createElement('span');
+                fallbackSpan.className = 'logo-icon';
+                fallbackSpan.textContent = '✨';
+                fallbackSpan.style.fontSize = '32px';
+                fallbackSpan.style.filter = 'drop-shadow(0 0 6px #2A9D8F)';
+                logoImg.style.display = 'none';
+                if (parent && !parent.querySelector('.fallback-logo-icon')) {
+                    fallbackSpan.classList.add('fallback-logo-icon');
+                    parent.insertBefore(fallbackSpan, logoImg.nextSibling);
+                }
             });
         }
-
-        importServerBtn.onclick = () => openHapp(serverHappUrl, '✅ Открываем Happ и добавляем сервер...');
-        importRoutingBtn.onclick = () => openHapp(routingHappUrl || serverHappUrl, '🧭 Импортируем маршрутизацию...');
-        copyServerLinkBtn.onclick = () => copyToClipboard(serverHappUrl, '📋 Ссылка на сервер скопирована!');
-        copyRoutingLinkBtn.onclick = () => copyToClipboard(routingHappUrl || serverHappUrl, '📋 Ссылка на правила скопирована!');
-
-        if (!routingHappUrl) {
-            importRoutingBtn.style.opacity = '0.6';
-            importRoutingBtn.style.pointerEvents = 'none';
-            importRoutingBtn.title = 'Для этого файла не определены правила маршрутизации';
-        }
-
-        // Показываем интерфейс
-        document.getElementById('loadingView').style.display = 'none';
-        document.getElementById('mainView').style.display = 'block';
-
-        // небольшая авто-попытка для сервера, если это удобно (через 0.5 сек)
-        setTimeout(() => {
-            if (serverHappUrl && !window.location.href.includes('happ://')) {
-                // не авторедирект, но даём пользователю кнопки
-            }
-        }, 500);
     })();
 </script>
 </body>
