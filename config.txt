@@ -2,14 +2,14 @@
 #profile-update-interval: 1
 #update-always: true
 #subscription-userinfo: upload=0; download=0; total=0; expire=1893456000
-#profile-web-page-url: https://github.com/alex67513284913532659306/test43241287450
+#profile-web-page-url: https://alexstudiocode.ru
 #announce: "
 ✅ AlexStudio Code | Белые списки
 ✅ Обход белых списков
 ✅ Большая скорость
 ✅ Рабочий YouTube и Telegram
 ✅ Ru-локации и обходы блокировок
-📅 Актуально на 02.04.2026|20:37:09 GMT+7
+📅 Актуально на 02.04.2026|20:37:58 GMT+7
 🔄 Автообновление: каждый час
 👤 Поддержка: support@alexstudiocode.ru
 "
