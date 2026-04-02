@@ -3,6 +3,6 @@
 #update-always: true
 #subscription-userinfo: upload=0; download=0; total=0; expire=1893456000
 #profile-web-page-url: https://alexstudiocode.ru
-#announce: ✅ Обход белых списков | Большая скорость | Рабочий YouTube и Telegram | Ru-локации | Актуально на 02.04.2026 - 23:50:32 GMT+7 | Поддержка: support@alexstudiocode.ru
+#announce: ✅ Обход белых списков | Большая скорость | Рабочий YouTube и Telegram | Ru-локации | Актуально на 02.04.2026 - 23:56:36 GMT+7 | Поддержка: support@alexstudiocode.ru
 
 vless://50e06d85-75b2-4b9b-9f0a-f2ae51cf912d@vpn-ru.spend.tg:8443?security=reality&encryption=none&pbk=kt-wshmPVd-J1dlU-tsXUoGag2-oFwYQ5UafScaAfzQ&headerType=none&fp=qq&allowinsecure=0&type=tcp&flow=xtls-rprx-vision&sni=apple.com#%F0%9F%87%B7%F0%9F%87%BA+Russia
