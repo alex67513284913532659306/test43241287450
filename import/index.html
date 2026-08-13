@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PC2 VPN - Импорт</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(145deg, #0a0a0f 0%, #1a1a2e 100%);
@@ -22,7 +17,6 @@
             padding: 20px;
             color: #fff;
         }
-
         .container {
             max-width: 420px;
             width: 100%;
@@ -34,7 +28,6 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
             text-align: center;
         }
-
         .logo {
             width: 80px;
             height: 80px;
@@ -47,7 +40,6 @@
             font-size: 36px;
             box-shadow: 0 8px 32px rgba(108, 60, 225, 0.4);
         }
-
         h1 {
             font-size: 24px;
             font-weight: 700;
@@ -56,77 +48,22 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .subtitle {
             color: rgba(255, 255, 255, 0.6);
             font-size: 14px;
             margin-bottom: 24px;
         }
-
-        .status-card {
+        .happ-link-box {
             background: rgba(255, 255, 255, 0.06);
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 24px;
+            padding: 16px;
+            margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .status-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .status-row:last-child {
-            border-bottom: none;
-        }
-
-        .status-label {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 13px;
-        }
-
-        .status-value {
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        .status-value.active {
-            color: #34d399;
-        }
-
-        .status-value.expired {
-            color: #f87171;
-        }
-
-        .progress-container {
-            margin: 16px 0;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 3px;
-            background: linear-gradient(90deg, #6C3CE1, #E040FB);
-            transition: width 0.5s ease;
-        }
-
-        .progress-text {
-            display: flex;
-            justify-content: space-between;
+            word-break: break-all;
             font-size: 12px;
             color: rgba(255, 255, 255, 0.5);
-            margin-top: 6px;
+            text-align: left;
         }
-
         .btn-import {
             display: block;
             width: 100%;
@@ -144,17 +81,7 @@
             margin-top: 8px;
             box-shadow: 0 8px 30px rgba(108, 60, 225, 0.35);
         }
-
-        .btn-import:active {
-            transform: scale(0.96);
-        }
-
-        .btn-import:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
+        .btn-import:active { transform: scale(0.96); }
         .btn-copy {
             display: block;
             width: 100%;
@@ -169,20 +96,8 @@
             transition: all 0.3s ease;
             margin-top: 12px;
         }
-
-        .btn-copy:active {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .btn-copy.copied {
-            color: #34d399;
-            border-color: #34d399;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
+        .btn-copy:active { background: rgba(255, 255, 255, 0.05); }
+        .btn-copy.copied { color: #34d399; border-color: #34d399; }
         .error {
             color: #f87171;
             font-size: 14px;
@@ -192,247 +107,158 @@
             border-radius: 12px;
             border: 1px solid rgba(248, 113, 113, 0.2);
         }
-
-        .loader {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top: 3px solid #6C3CE1;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .footer {
             margin-top: 20px;
             font-size: 12px;
             color: rgba(255, 255, 255, 0.25);
         }
-
-        .game-icon {
-            font-size: 20px;
-            margin-right: 6px;
-        }
-
-        @media (max-width: 460px) {
-            .container {
-                padding: 24px 16px;
-            }
-            h1 { font-size: 20px; }
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <div class="container" id="app">
-        <div class="logo">🎯</div>
-        <h1>PC2 VPN</h1>
-        <p class="subtitle">Импорт подписки для Pixel Combats 2</p>
+<div class="container">
+    <div class="logo">🎯</div>
+    <h1>PC2 VPN</h1>
+    <p class="subtitle">Импорт подписки для Pixel Combats 2</p>
 
-        <!-- Состояние загрузки -->
-        <div id="loadingState">
-            <div class="loader"></div>
-            <p style="color: rgba(255,255,255,0.5); font-size: 14px;">Загрузка подписки...</p>
-        </div>
-
-        <!-- Состояние ошибки -->
-        <div id="errorState" class="hidden">
-            <div class="error">
-                ❌ Не удалось загрузить подписку. Проверьте ссылку и попробуйте снова.
-            </div>
-            <button class="btn-import" onclick="window.location.reload()">↻ Попробовать снова</button>
-        </div>
-
-        <!-- Состояние с подпиской -->
-        <div id="subscriptionState" class="hidden">
-            <div class="status-card">
-                <div class="status-row">
-                    <span class="status-label">📊 Статус</span>
-                    <span class="status-value active" id="statusText">● Активна</span>
-                </div>
-                <div class="status-row">
-                    <span class="status-label">📅 Действует до</span>
-                    <span class="status-value" id="expiryText">--</span>
-                </div>
-                <div class="status-row">
-                    <span class="status-label">📊 Пакет</span>
-                    <span class="status-value" id="packageText">10 ГБ</span>
-                </div>
-            </div>
-
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-                </div>
-                <div class="progress-text">
-                    <span id="usedText">0 ГБ</span>
-                    <span id="totalText">10 ГБ</span>
-                </div>
-            </div>
-
-            <a class="btn-import" id="importBtn" href="#">
-                📥 ИМПОРТИРОВАТЬ В HAPP
-            </a>
-
-            <button class="btn-copy" id="copyBtn">📋 Скопировать ссылку</button>
-        </div>
-
-        <div class="footer">
-            Pixel Combats 2 VPN • Бесплатно
-        </div>
+    <div id="content">
+        <!-- Контент будет вставлен сюда -->
     </div>
 
-    <script>
-        // Получаем параметр sub из URL
-        function getSubParam() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('sub');
-        }
+    <div class="footer">Pixel Combats 2 VPN • Бесплатно</div>
+</div>
 
-        const subParam = getSubParam();
+<script>
+    // Получаем полный URL и извлекаем параметр sub
+    const urlParams = new URLSearchParams(window.location.search);
+    let subValue = urlParams.get('sub');
 
-        // Элементы
-        const loadingState = document.getElementById('loadingState');
-        const errorState = document.getElementById('errorState');
-        const subscriptionState = document.getElementById('subscriptionState');
-        const importBtn = document.getElementById('importBtn');
-        const copyBtn = document.getElementById('copyBtn');
-        const statusText = document.getElementById('statusText');
-        const expiryText = document.getElementById('expiryText');
-        const packageText = document.getElementById('packageText');
-        const progressFill = document.getElementById('progressFill');
-        const usedText = document.getElementById('usedText');
-        const totalText = document.getElementById('totalText');
+    // Функция для показа ошибки
+    function showError(message) {
+        document.getElementById('content').innerHTML = `
+            <div class="error">❌ ${message}</div>
+            <button class="btn-import" onclick="window.location.reload()">↻ Попробовать снова</button>
+        `;
+    }
 
-        if (!subParam) {
-            // Нет параметра sub
-            loadingState.classList.add('hidden');
-            errorState.classList.remove('hidden');
-            errorState.querySelector('.error').textContent = '❌ Ошибка: не указана подписка.';
-            return;
-        }
-
-        // Декодируем параметр (на случай если он закодирован)
-        let decodedSub = subParam;
+    // Если параметра sub нет
+    if (!subValue) {
+        showError('Не указана подписка.');
+    } else {
+        // Декодируем URL-кодировку (если есть)
         try {
-            decodedSub = decodeURIComponent(subParam);
+            subValue = decodeURIComponent(subValue);
         } catch(e) {}
 
-        // Проверяем, является ли это happ:// ссылкой
-        const isHappLink = decodedSub.startsWith('happ://');
-        const isUrl = decodedSub.startsWith('http://') || decodedSub.startsWith('https://');
-
-        // Если это happ:// ссылка - используем её напрямую
-        if (isHappLink) {
-            loadingState.classList.add('hidden');
-            subscriptionState.classList.remove('hidden');
-
-            // Устанавливаем ссылку для импорта
-            importBtn.href = decodedSub;
-
-            // Показываем информацию (без реальных данных, только заглушка)
-            statusText.textContent = '● Активна';
-            statusText.className = 'status-value active';
-            expiryText.textContent = '30 дней';
-            packageText.textContent = '10 ГБ';
-            progressFill.style.width = '0%';
-            usedText.textContent = '0 ГБ';
-            totalText.textContent = '10 ГБ';
+        // Проверяем, начинается ли ссылка с happ://
+        if (subValue.startsWith('happ://')) {
+            // ИЗВЛЕКАЕМ ССЫЛКУ И ДЕЛАЕМ ПРЯМУЮ ССЫЛКУ
+            document.getElementById('content').innerHTML = `
+                <div style="text-align: center; margin: 20px 0;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">🔗</div>
+                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px; font-size: 14px;">
+                        Готово! Нажмите кнопку ниже, чтобы импортировать подписку
+                    </p>
+                    <a href="${subValue}" class="btn-import" id="importBtn">
+                        📥 ИМПОРТИРОВАТЬ В HAPP
+                    </a>
+                    <button class="btn-copy" id="copyBtn">📋 Скопировать ссылку</button>
+                </div>
+            `;
 
             // Копирование ссылки
-            copyBtn.addEventListener('click', async function() {
+            document.getElementById('copyBtn').addEventListener('click', async function() {
                 try {
-                    await navigator.clipboard.writeText(decodedSub);
-                    copyBtn.textContent = '✅ Скопировано!';
-                    copyBtn.classList.add('copied');
+                    await navigator.clipboard.writeText(subValue);
+                    this.textContent = '✅ Скопировано!';
+                    this.classList.add('copied');
                     setTimeout(() => {
-                        copyBtn.textContent = '📋 Скопировать ссылку';
-                        copyBtn.classList.remove('copied');
+                        this.textContent = '📋 Скопировать ссылку';
+                        this.classList.remove('copied');
                     }, 2000);
                 } catch(e) {
-                    alert('Не удалось скопировать. Скопируйте ссылку вручную:\n' + decodedSub);
+                    alert('Не удалось скопировать. Скопируйте вручную:\n' + subValue);
                 }
             });
 
-            return;
-        }
-
-        // Если это обычная ссылка - пытаемся получить информацию
-        if (isUrl) {
-            // Показываем загрузку
-            loadingState.classList.remove('hidden');
-            subscriptionState.classList.add('hidden');
-            errorState.classList.add('hidden');
-
-            // Пробуем получить информацию о подписке
-            fetch(decodedSub + '?format=info')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('HTTP ' + response.status);
+        } else if (subValue.startsWith('http://') || subValue.startsWith('https://')) {
+            // Обычная HTTP ссылка — пытаемся получить информацию (ваш старый код)
+            document.getElementById('content').innerHTML = `
+                <div style="text-align: center; padding: 20px 0;">
+                    <div class="loader" style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top:3px solid #6C3CE1;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px;"></div>
+                    <p style="color: rgba(255,255,255,0.5);">Загрузка подписки...</p>
+                </div>
+                <style>
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
                     }
-                    return response.json();
-                })
+                </style>
+            `;
+
+            // Здесь ваш старый код для fetch()
+            fetch(subValue + '?format=info')
+                .then(response => response.json())
                 .then(data => {
-                    loadingState.classList.add('hidden');
-                    subscriptionState.classList.remove('hidden');
-
-                    // Обновляем данные
+                    // Показываем информацию о подписке
                     const isActive = data.enable !== false;
-                    statusText.textContent = isActive ? '● Активна' : '● Истекла';
-                    statusText.className = 'status-value ' + (isActive ? 'active' : 'expired');
-
-                    if (data.expiryTime) {
-                        const date = new Date(data.expiryTime);
-                        expiryText.textContent = date.toLocaleDateString('ru-RU');
-                    }
-
                     const totalGB = data.totalGB ? (data.totalGB / 1024 / 1024 / 1024).toFixed(1) : 10;
                     const usedGB = data.usedGB ? data.usedGB.toFixed(1) : 0;
-                    const remainingGB = (totalGB - usedGB).toFixed(1);
-
-                    packageText.textContent = totalGB + ' ГБ';
-                    usedText.textContent = usedGB + ' ГБ';
-                    totalText.textContent = totalGB + ' ГБ';
-
                     const progress = Math.min((usedGB / totalGB) * 100, 100);
-                    progressFill.style.width = progress + '%';
 
-                    // Ссылка для импорта
-                    importBtn.href = decodedSub;
+                    document.getElementById('content').innerHTML = `
+                        <div class="status-card" style="background:rgba(255,255,255,0.06);border-radius:16px;padding:20px;margin-bottom:24px;border:1px solid rgba(255,255,255,0.06);">
+                            <div class="status-row" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                                <span style="color:rgba(255,255,255,0.5);font-size:13px;">📊 Статус</span>
+                                <span style="font-weight:600;font-size:13px;color:${isActive ? '#34d399' : '#f87171'};">${isActive ? '● Активна' : '● Истекла'}</span>
+                            </div>
+                            <div class="status-row" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                                <span style="color:rgba(255,255,255,0.5);font-size:13px;">📅 Действует до</span>
+                                <span style="font-weight:600;font-size:13px;">${data.expiryTime ? new Date(data.expiryTime).toLocaleDateString('ru-RU') : '--'}</span>
+                            </div>
+                            <div class="status-row" style="display:flex;justify-content:space-between;padding:8px 0;">
+                                <span style="color:rgba(255,255,255,0.5);font-size:13px;">📊 Пакет</span>
+                                <span style="font-weight:600;font-size:13px;">${totalGB} ГБ</span>
+                            </div>
+                        </div>
+                        <div style="margin:16px 0;">
+                            <div style="width:100%;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;">
+                                <div style="height:100%;border-radius:3px;background:linear-gradient(90deg,#6C3CE1,#E040FB);width:${progress}%;transition:width 0.5s ease;"></div>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.5);margin-top:6px;">
+                                <span>${usedGB} ГБ</span>
+                                <span>${totalGB} ГБ</span>
+                            </div>
+                        </div>
+                        <a href="${subValue}" class="btn-import">📥 ИМПОРТИРОВАТЬ</a>
+                        <button class="btn-copy" id="copyBtn">📋 Скопировать ссылку</button>
+                    `;
 
-                    // Копирование ссылки
-                    copyBtn.addEventListener('click', async function() {
+                    // Копирование
+                    document.getElementById('copyBtn').addEventListener('click', async function() {
                         try {
-                            await navigator.clipboard.writeText(decodedSub);
-                            copyBtn.textContent = '✅ Скопировано!';
-                            copyBtn.classList.add('copied');
+                            await navigator.clipboard.writeText(subValue);
+                            this.textContent = '✅ Скопировано!';
+                            this.classList.add('copied');
                             setTimeout(() => {
-                                copyBtn.textContent = '📋 Скопировать ссылку';
-                                copyBtn.classList.remove('copied');
+                                this.textContent = '📋 Скопировать ссылку';
+                                this.classList.remove('copied');
                             }, 2000);
                         } catch(e) {
-                            alert('Не удалось скопировать. Скопируйте ссылку вручную:\n' + decodedSub);
+                            alert('Не удалось скопировать. Скопируйте вручную:\n' + subValue);
                         }
                     });
                 })
-                .catch(error => {
-                    loadingState.classList.add('hidden');
-                    errorState.classList.remove('hidden');
-                    errorState.querySelector('.error').textContent =
-                        '❌ Не удалось загрузить подписку: ' + error.message;
+                .catch(() => {
+                    showError('Не удалось загрузить информацию о подписке.');
                 });
+
         } else {
-            // Непонятный формат
-            loadingState.classList.add('hidden');
-            errorState.classList.remove('hidden');
-            errorState.querySelector('.error').textContent = '❌ Неверный формат подписки.';
+            showError('Неверный формат подписки.');
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>
