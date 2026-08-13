@@ -2,413 +2,437 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC2 VPN - Импорт в Happ</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PC2 VPN - Импорт</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--tg-theme-bg-color, #ffffff);
-            color: var(--tg-theme-text-color, #000000);
+            background: linear-gradient(145deg, #0a0a0f 0%, #1a1a2e 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            color: #fff;
         }
-        
+
         .container {
+            max-width: 420px;
             width: 100%;
-            max-width: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 32px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
             text-align: center;
         }
-        
+
         .logo {
-            font-size: 64px;
-            margin-bottom: 16px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #6C3CE1, #E040FB);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+            box-shadow: 0 8px 32px rgba(108, 60, 225, 0.4);
         }
-        
+
         h1 {
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 60%, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        
+
         .subtitle {
+            color: rgba(255, 255, 255, 0.6);
             font-size: 14px;
-            opacity: 0.7;
             margin-bottom: 24px;
         }
-        
-        .info-box {
-            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            text-align: left;
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
-        
-        .info-box .label {
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .status-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-label {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+        }
+
+        .status-value {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .status-value.active {
+            color: #34d399;
+        }
+
+        .status-value.expired {
+            color: #f87171;
+        }
+
+        .progress-container {
+            margin: 16px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #6C3CE1, #E040FB);
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
             font-size: 12px;
-            opacity: 0.6;
-            margin-bottom: 4px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 6px;
         }
-        
-        .info-box .value {
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .btn {
+
+        .btn-import {
             display: block;
             width: 100%;
             padding: 16px;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
-            margin-bottom: 12px;
-        }
-        
-        .btn:active {
-            opacity: 0.7;
-        }
-        
-        .btn-happ {
-            background: #6C5CE7;
-            color: #ffffff;
+            border-radius: 16px;
             font-size: 18px;
-            padding: 18px;
-        }
-        
-        .btn-happ:hover {
-            background: #5A4BD1;
-        }
-        
-        .btn-secondary {
-            background: var(--tg-theme-secondary-bg-color, #e0e0e0);
-            color: var(--tg-theme-text-color, #000000);
-        }
-        
-        .btn-success {
-            background: #31b545;
-            color: #ffffff;
-        }
-        
-        .status {
-            margin-top: 16px;
-            font-size: 14px;
-            padding: 12px;
-            border-radius: 8px;
-            display: none;
-        }
-        
-        .status.success {
-            display: block;
-            background: #31b54520;
-            color: #31b545;
-            border: 1px solid #31b54540;
-        }
-        
-        .status.error {
-            display: block;
-            background: #ff444420;
-            color: #ff4444;
-            border: 1px solid #ff444440;
-        }
-        
-        .status.info {
-            display: block;
-            background: #0088cc20;
-            color: #0088cc;
-            border: 1px solid #0088cc40;
-        }
-        
-        .status.warning {
-            display: block;
-            background: #ffaa0020;
-            color: #cc8800;
-            border: 1px solid #ffaa0040;
-        }
-        
-        .encrypted-link {
-            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-            border-radius: 8px;
-            padding: 12px;
-            margin: 12px 0;
-            font-size: 11px;
-            word-break: break-all;
-            font-family: monospace;
-            user-select: all;
-            display: none;
-        }
-        
-        .hint {
-            font-size: 12px;
-            opacity: 0.6;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(145deg, #6C3CE1, #E040FB);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
             margin-top: 8px;
+            box-shadow: 0 8px 30px rgba(108, 60, 225, 0.35);
         }
-        
-        .spinner {
-            display: none;
+
+        .btn-import:active {
+            transform: scale(0.96);
+        }
+
+        .btn-import:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-copy {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+        }
+
+        .btn-copy:active {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-copy.copied {
+            color: #34d399;
+            border-color: #34d399;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .error {
+            color: #f87171;
+            font-size: 14px;
+            margin: 16px 0;
+            padding: 12px;
+            background: rgba(248, 113, 113, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(248, 113, 113, 0.2);
+        }
+
+        .loader {
             width: 40px;
             height: 40px;
-            margin: 10px auto;
-            border: 4px solid var(--tg-theme-secondary-bg-color, #f0f0f0);
-            border-top: 4px solid #6C5CE7;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #6C3CE1;
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
-        
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        .install-happ {
-            background: var(--tg-theme-secondary-bg-color, #f8f8f8);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 16px 0;
-            display: none;
-            border: 2px dashed #6C5CE740;
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.25);
         }
-        
-        .install-happ h3 {
-            font-size: 16px;
-            margin-bottom: 8px;
-            color: #6C5CE7;
+
+        .game-icon {
+            font-size: 20px;
+            margin-right: 6px;
         }
-        
-        .install-happ p {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-bottom: 12px;
-        }
-        
-        .btn-install {
-            display: inline-block;
-            padding: 10px 24px;
-            background: #6C5CE7;
-            color: #ffffff;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        .btn-install:hover {
-            background: #5A4BD1;
+
+        @media (max-width: 460px) {
+            .container {
+                padding: 24px 16px;
+            }
+            h1 { font-size: 20px; }
         }
     </style>
 </head>
 <body>
+
     <div class="container" id="app">
-        <div class="logo">🚀</div>
-        <h1>Импорт подписки</h1>
-        <p class="subtitle">Нажмите на кнопку, чтобы автоматически импортировать подписку в <b>Happ</b></p>
-        
-        <div class="info-box">
-            <div class="label">📦 Пакет</div>
-            <div class="value" id="package-info">10 ГБ / 30 дней</div>
+        <div class="logo">🎯</div>
+        <h1>PC2 VPN</h1>
+        <p class="subtitle">Импорт подписки для Pixel Combats 2</p>
+
+        <!-- Состояние загрузки -->
+        <div id="loadingState">
+            <div class="loader"></div>
+            <p style="color: rgba(255,255,255,0.5); font-size: 14px;">Загрузка подписки...</p>
         </div>
-        
-        <div class="info-box">
-            <div class="label">📅 Действует до</div>
-            <div class="value" id="expiry-info">Загрузка...</div>
+
+        <!-- Состояние ошибки -->
+        <div id="errorState" class="hidden">
+            <div class="error">
+                ❌ Не удалось загрузить подписку. Проверьте ссылку и попробуйте снова.
+            </div>
+            <button class="btn-import" onclick="window.location.reload()">↻ Попробовать снова</button>
         </div>
-        
-        <div class="spinner" id="spinner"></div>
-        
-        <button class="btn btn-happ" id="importBtn">
-            📥 Импортировать в Happ
-        </button>
-        
-        <button class="btn btn-secondary" id="copyBtn">
-            📋 Скопировать ссылку
-        </button>
-        
-        <div id="status" class="status"></div>
-        <div id="encryptedLink" class="encrypted-link"></div>
-        
-        <!-- Блок с установкой Happ -->
-        <div class="install-happ" id="installHapp">
-            <h3>📱 Установите Happ</h3>
-            <p>
-                Похоже, что приложение <b>Happ</b> не установлено на вашем устройстве.<br>
-                Скачайте его, чтобы импортировать подписку автоматически.
-            </p>
-            <a href="https://happ.su/download" class="btn-install" target="_blank">
-                📲 Скачать Happ
+
+        <!-- Состояние с подпиской -->
+        <div id="subscriptionState" class="hidden">
+            <div class="status-card">
+                <div class="status-row">
+                    <span class="status-label">📊 Статус</span>
+                    <span class="status-value active" id="statusText">● Активна</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label">📅 Действует до</span>
+                    <span class="status-value" id="expiryText">--</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label">📊 Пакет</span>
+                    <span class="status-value" id="packageText">10 ГБ</span>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="usedText">0 ГБ</span>
+                    <span id="totalText">10 ГБ</span>
+                </div>
+            </div>
+
+            <a class="btn-import" id="importBtn" href="#">
+                📥 ИМПОРТИРОВАТЬ В HAPP
             </a>
+
+            <button class="btn-copy" id="copyBtn">📋 Скопировать ссылку</button>
         </div>
-        
-        <p class="hint">Подписка будет автоматически импортирована в приложение Happ</p>
+
+        <div class="footer">
+            Pixel Combats 2 VPN • Бесплатно
+        </div>
     </div>
-    
+
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
-        
-        // Получаем данные из URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const encryptedLink = urlParams.get('encrypted') || '';
-        const expiry = urlParams.get('expiry') || '';
-        const subId = urlParams.get('sub_id') || '';
-        
-        // Показываем информацию
-        if (expiry) {
-            const date = new Date(parseInt(expiry));
-            document.getElementById('expiry-info').textContent = date.toLocaleDateString('ru-RU');
-        } else {
-            document.getElementById('expiry-info').textContent = '30 дней';
+        // Получаем параметр sub из URL
+        function getSubParam() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('sub');
         }
-        
-        let happOpened = false;
-        
-        // Кнопка импорта в Happ
-        document.getElementById('importBtn').addEventListener('click', function() {
-            const status = document.getElementById('status');
-            const spinner = document.getElementById('spinner');
-            const installBlock = document.getElementById('installHapp');
-            const linkDiv = document.getElementById('encryptedLink');
-            
-            if (encryptedLink) {
-                // Показываем спиннер
-                spinner.style.display = 'block';
-                this.textContent = '⏳ Открываю Happ...';
-                this.disabled = true;
-                status.style.display = 'none';
-                installBlock.style.display = 'none';
-                linkDiv.style.display = 'none';
-                happOpened = false;
-                
-                // Пытаемся открыть Happ
+
+        const subParam = getSubParam();
+
+        // Элементы
+        const loadingState = document.getElementById('loadingState');
+        const errorState = document.getElementById('errorState');
+        const subscriptionState = document.getElementById('subscriptionState');
+        const importBtn = document.getElementById('importBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const statusText = document.getElementById('statusText');
+        const expiryText = document.getElementById('expiryText');
+        const packageText = document.getElementById('packageText');
+        const progressFill = document.getElementById('progressFill');
+        const usedText = document.getElementById('usedText');
+        const totalText = document.getElementById('totalText');
+
+        if (!subParam) {
+            // Нет параметра sub
+            loadingState.classList.add('hidden');
+            errorState.classList.remove('hidden');
+            errorState.querySelector('.error').textContent = '❌ Ошибка: не указана подписка.';
+            return;
+        }
+
+        // Декодируем параметр (на случай если он закодирован)
+        let decodedSub = subParam;
+        try {
+            decodedSub = decodeURIComponent(subParam);
+        } catch(e) {}
+
+        // Проверяем, является ли это happ:// ссылкой
+        const isHappLink = decodedSub.startsWith('happ://');
+        const isUrl = decodedSub.startsWith('http://') || decodedSub.startsWith('https://');
+
+        // Если это happ:// ссылка - используем её напрямую
+        if (isHappLink) {
+            loadingState.classList.add('hidden');
+            subscriptionState.classList.remove('hidden');
+
+            // Устанавливаем ссылку для импорта
+            importBtn.href = decodedSub;
+
+            // Показываем информацию (без реальных данных, только заглушка)
+            statusText.textContent = '● Активна';
+            statusText.className = 'status-value active';
+            expiryText.textContent = '30 дней';
+            packageText.textContent = '10 ГБ';
+            progressFill.style.width = '0%';
+            usedText.textContent = '0 ГБ';
+            totalText.textContent = '10 ГБ';
+
+            // Копирование ссылки
+            copyBtn.addEventListener('click', async function() {
                 try {
-                    // Открываем Happ с зашифрованной ссылкой
-                    window.location.href = encryptedLink;
-                    happOpened = true;
-                    
-                    // Ждем 2 секунды - если приложение не открылось, показываем предупреждение
+                    await navigator.clipboard.writeText(decodedSub);
+                    copyBtn.textContent = '✅ Скопировано!';
+                    copyBtn.classList.add('copied');
                     setTimeout(() => {
-                        spinner.style.display = 'none';
-                        this.textContent = '📥 Импортировать в Happ';
-                        this.disabled = false;
-                        
-                        if (!happOpened) {
-                            // Показываем ссылку
-                            linkDiv.textContent = encryptedLink;
-                            linkDiv.style.display = 'block';
-                            
-                            // Показываем блок с установкой
-                            installBlock.style.display = 'block';
-                            
-                            status.className = 'status warning';
-                            status.textContent = '⚠️ Похоже, что приложение Happ не установлено. Скачайте его по ссылке ниже или скопируйте ссылку вручную.';
-                            status.style.display = 'block';
-                            
-                            // Копируем ссылку в буфер обмена
-                            navigator.clipboard.writeText(encryptedLink).catch(() => {});
-                        }
+                        copyBtn.textContent = '📋 Скопировать ссылку';
+                        copyBtn.classList.remove('copied');
                     }, 2000);
-                    
-                } catch (e) {
-                    spinner.style.display = 'none';
-                    this.textContent = '📥 Импортировать в Happ';
-                    this.disabled = false;
-                    
-                    // Показываем ссылку
-                    linkDiv.textContent = encryptedLink;
-                    linkDiv.style.display = 'block';
-                    
-                    // Показываем блок с установкой
-                    installBlock.style.display = 'block';
-                    
-                    status.className = 'status error';
-                    status.textContent = '❌ Не удалось открыть Happ. Возможно приложение не установлено.';
-                    status.style.display = 'block';
+                } catch(e) {
+                    alert('Не удалось скопировать. Скопируйте ссылку вручную:\n' + decodedSub);
                 }
-                
-                // Отправляем событие в Telegram
-                tg.sendData(JSON.stringify({
-                    action: 'import_happ',
-                    sub_id: subId,
-                    encrypted: encryptedLink
-                }));
-                
-            } else {
-                status.className = 'status error';
-                status.textContent = '❌ Ошибка: ссылка не найдена';
-                status.style.display = 'block';
-            }
-        });
-        
-        // Кнопка копирования
-        document.getElementById('copyBtn').addEventListener('click', function() {
-            const status = document.getElementById('status');
-            const linkDiv = document.getElementById('encryptedLink');
-            
-            if (encryptedLink) {
-                navigator.clipboard.writeText(encryptedLink).then(() => {
-                    status.className = 'status success';
-                    status.textContent = '✅ Ссылка скопирована! Откройте Happ вручную';
-                    status.style.display = 'block';
-                    
-                    tg.showPopup({
-                        title: '✅ Готово!',
-                        message: 'Ссылка скопирована. Откройте Happ, чтобы импортировать подписку.',
-                        buttons: [{type: 'ok'}]
+            });
+
+            return;
+        }
+
+        // Если это обычная ссылка - пытаемся получить информацию
+        if (isUrl) {
+            // Показываем загрузку
+            loadingState.classList.remove('hidden');
+            subscriptionState.classList.add('hidden');
+            errorState.classList.add('hidden');
+
+            // Пробуем получить информацию о подписке
+            fetch(decodedSub + '?format=info')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('HTTP ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    loadingState.classList.add('hidden');
+                    subscriptionState.classList.remove('hidden');
+
+                    // Обновляем данные
+                    const isActive = data.enable !== false;
+                    statusText.textContent = isActive ? '● Активна' : '● Истекла';
+                    statusText.className = 'status-value ' + (isActive ? 'active' : 'expired');
+
+                    if (data.expiryTime) {
+                        const date = new Date(data.expiryTime);
+                        expiryText.textContent = date.toLocaleDateString('ru-RU');
+                    }
+
+                    const totalGB = data.totalGB ? (data.totalGB / 1024 / 1024 / 1024).toFixed(1) : 10;
+                    const usedGB = data.usedGB ? data.usedGB.toFixed(1) : 0;
+                    const remainingGB = (totalGB - usedGB).toFixed(1);
+
+                    packageText.textContent = totalGB + ' ГБ';
+                    usedText.textContent = usedGB + ' ГБ';
+                    totalText.textContent = totalGB + ' ГБ';
+
+                    const progress = Math.min((usedGB / totalGB) * 100, 100);
+                    progressFill.style.width = progress + '%';
+
+                    // Ссылка для импорта
+                    importBtn.href = decodedSub;
+
+                    // Копирование ссылки
+                    copyBtn.addEventListener('click', async function() {
+                        try {
+                            await navigator.clipboard.writeText(decodedSub);
+                            copyBtn.textContent = '✅ Скопировано!';
+                            copyBtn.classList.add('copied');
+                            setTimeout(() => {
+                                copyBtn.textContent = '📋 Скопировать ссылку';
+                                copyBtn.classList.remove('copied');
+                            }, 2000);
+                        } catch(e) {
+                            alert('Не удалось скопировать. Скопируйте ссылку вручную:\n' + decodedSub);
+                        }
                     });
-                }).catch(() => {
-                    linkDiv.textContent = encryptedLink;
-                    linkDiv.style.display = 'block';
-                    
-                    status.className = 'status info';
-                    status.textContent = '📋 Выделите ссылку ниже и скопируйте её';
-                    status.style.display = 'block';
+                })
+                .catch(error => {
+                    loadingState.classList.add('hidden');
+                    errorState.classList.remove('hidden');
+                    errorState.querySelector('.error').textContent =
+                        '❌ Не удалось загрузить подписку: ' + error.message;
                 });
-            } else {
-                status.className = 'status error';
-                status.textContent = '❌ Ошибка: ссылка не найдена';
-                status.style.display = 'block';
-            }
-        });
-        
-        // Закрываем приложение
-        tg.onEvent('viewportChanged', function() {});
-        
-        // Если страница потеряла фокус - значит Happ открылся
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                happOpened = true;
-                const status = document.getElementById('status');
-                const spinner = document.getElementById('spinner');
-                const btn = document.getElementById('importBtn');
-                
-                spinner.style.display = 'none';
-                btn.textContent = '📥 Импортировать в Happ';
-                btn.disabled = false;
-                
-                status.className = 'status success';
-                status.textContent = '✅ Happ открыт! Подписка импортируется...';
-                status.style.display = 'block';
-                
-                // Закрываем Web App через 1 секунду
-                setTimeout(() => {
-                    tg.close();
-                }, 1000);
-            }
-        });
+        } else {
+            // Непонятный формат
+            loadingState.classList.add('hidden');
+            errorState.classList.remove('hidden');
+            errorState.querySelector('.error').textContent = '❌ Неверный формат подписки.';
+        }
     </script>
+
 </body>
 </html>
