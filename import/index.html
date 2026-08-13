@@ -29,7 +29,6 @@
             box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
             text-align: center;
         }
-        
         .logo-wrap {
             width: 80px;
             height: 80px;
@@ -46,7 +45,6 @@
             height: 100%;
             object-fit: contain;
         }
-        
         h1 {
             font-size: 22px;
             font-weight: 700;
@@ -63,7 +61,6 @@
             letter-spacing: 0.2px;
             margin-bottom: 24px;
         }
-        
         .btn-import {
             display: block;
             width: 100%;
@@ -90,7 +87,6 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
-        
         .btn-import svg {
             width: 20px;
             height: 20px;
@@ -101,7 +97,6 @@
             stroke-linejoin: round;
             flex-shrink: 0;
         }
-        
         .btn-secondary {
             display: block;
             width: 100%;
@@ -133,7 +128,6 @@
             stroke-linejoin: round;
             flex-shrink: 0;
         }
-        
         .google-play-btn {
             display: inline-flex;
             align-items: center;
@@ -185,7 +179,6 @@
             font-weight: 700;
             letter-spacing: -0.2px;
         }
-        
         .card {
             background: rgba(255, 255, 255, 0.04);
             border-radius: 16px;
@@ -229,7 +222,6 @@
         }
         .card-value.active { color: #34d399; }
         .card-value.expired { color: #f87171; }
-        
         .progress-wrap {
             margin: 14px 0 18px;
         }
@@ -253,7 +245,6 @@
             color: rgba(255, 255, 255, 0.3);
             margin-top: 5px;
         }
-        
         .error-box {
             background: rgba(248, 113, 113, 0.08);
             border: 1px solid rgba(248, 113, 113, 0.12);
@@ -276,7 +267,6 @@
             stroke-linejoin: round;
             flex-shrink: 0;
         }
-        
         .loader-wrap {
             text-align: center;
             padding: 24px 0 12px;
@@ -296,7 +286,6 @@
             font-size: 14px;
             font-weight: 400;
         }
-        
         .happ-logo-small {
             width: 56px;
             height: 56px;
@@ -307,14 +296,12 @@
             padding: 6px;
             object-fit: contain;
         }
-        
         .footer {
             margin-top: 20px;
             font-size: 11px;
             color: rgba(255, 255, 255, 0.12);
             letter-spacing: 0.5px;
         }
-        
         .status-message {
             padding: 12px 16px;
             border-radius: 12px;
@@ -339,6 +326,32 @@
             background: rgba(96, 165, 250, 0.1);
             border: 1px solid rgba(96, 165, 250, 0.2);
             color: #60a5fa;
+        }
+        .link-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 12px 0;
+            word-break: break-all;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: left;
+        }
+        .btn-copy {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            margin-top: 8px;
+        }
+        .btn-copy:hover {
+            background: rgba(255, 255, 255, 0.08);
         }
     </style>
 </head>
@@ -366,11 +379,12 @@
     const icons = {
         download: `<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
         refresh: `<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`,
-        alert: `<svg viewBox="0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+        alert: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
         calendar: `<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
         package: `<svg viewBox="0 0 24 24"><path d="M12.89 1.45l8 4A2 2 0 0 1 22 7.24v9.53a2 2 0 0 1-1.11 1.79l-8 4a2 2 0 0 1-1.79 0l-8-4a2 2 0 0 1-1.1-1.8V7.24a2 2 0 0 1 1.11-1.79l8-4a2 2 0 0 1 1.78 0z"/><polyline points="2.32 6.16 12 11 21.68 6.16"/><line x1="12" y1="22.76" x2="12" y2="11"/></svg>`,
         status: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>`,
-        check: `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`
+        check: `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`,
+        copy: `<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`
     };
 
     // ========== ЛОГОТИП GOOGLE PLAY ==========
@@ -393,9 +407,10 @@
         // Через 3 секунды проверяем, открылось ли приложение
         setTimeout(() => {
             // Если мы всё ещё на странице — HAPP не открылся
-            if (document.body.contains(statusEl)) {
-                statusEl.textContent = '📱 HAPP не найден. Скачайте приложение.';
-                statusEl.className = 'status-message error show';
+            const statusEl2 = document.getElementById('importStatus');
+            if (statusEl2 && document.body.contains(statusEl2)) {
+                statusEl2.textContent = '📱 HAPP не найден. Скачайте приложение.';
+                statusEl2.className = 'status-message error show';
                 
                 // Показываем кнопку скачивания
                 const downloadBtn = document.getElementById('downloadHappBtn');
@@ -407,12 +422,44 @@
                 const importBtn = document.getElementById('importBtn');
                 if (importBtn) {
                     importBtn.disabled = false;
+                    importBtn.textContent = '📥 Импортировать в HAPP';
                 }
             }
         }, 2500);
     }
 
-    // ========== ФУНКЦИЯ ДЛЯ ПОКАЗА ОШИБКИ ==========
+    // ========== ФУНКЦИЯ ДЛЯ КОПИРОВАНИЯ ==========
+    function copyLink(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copyBtn');
+                if (btn) {
+                    btn.textContent = '✅ Скопировано!';
+                    setTimeout(() => { btn.textContent = '📋 Копировать ссылку'; }, 2000);
+                }
+            }).catch(() => {
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        const btn = document.getElementById('copyBtn');
+        if (btn) {
+            btn.textContent = '✅ Скопировано!';
+            setTimeout(() => { btn.textContent = '📋 Копировать ссылку'; }, 2000);
+        }
+    }
+
+    // ========== ПОКАЗАТЬ ОШИБКУ ==========
     function showError(message) {
         document.getElementById('content').innerHTML = `
             <div class="error-box">
@@ -425,7 +472,7 @@
         `;
     }
 
-    // ========== ФУНКЦИЯ ДЛЯ ПОКАЗА СООБЩЕНИЯ ОБ ОТСУТСТВИИ HAPP ==========
+    // ========== ПОКАЗАТЬ СООБЩЕНИЕ ОБ ОТСУТСТВИИ HAPP ==========
     function showNoHappMessage() {
         document.getElementById('content').innerHTML = `
             <div class="card" style="text-align:center; padding:24px 16px;">
@@ -449,25 +496,27 @@
             <div style="margin-top:14px; font-size:13px; color:rgba(255,255,255,0.2);">
                 После установки нажмите кнопку ниже
             </div>
-            <button class="btn-secondary" id="retryBtn">
+            <button class="btn-secondary" id="retryBtn" style="margin-top:8px;">
                 ${icons.refresh} Повторить импорт
             </button>
         `;
 
-        document.getElementById('retryBtn').addEventListener('click', function() {
-            window.location.href = subValue;
-            setTimeout(() => { showNoHappMessage(); }, 2000);
-        });
+        const retryBtn = document.getElementById('retryBtn');
+        if (retryBtn) {
+            retryBtn.addEventListener('click', function() {
+                window.location.href = subValue;
+            });
+        }
     }
 
-    // ========== ОСНОВНАЯ ЛОГИКА ==========
+    // ========== ГЛАВНАЯ ЛОГИКА ==========
     if (!subValue) {
         showError('Не указана подписка.');
     } else {
         try { subValue = decodeURIComponent(subValue); } catch(e) {}
 
+        // ===== HAPP ССЫЛКА =====
         if (subValue.startsWith('happ://')) {
-            // ===== ГЛАВНАЯ СТРАНИЦА С КНОПКОЙ =====
             document.getElementById('content').innerHTML = `
                 <div style="text-align:center; padding:12px 0 8px;">
                     <p style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:16px;">
@@ -489,21 +538,31 @@
                             <span class="big">HAPP</span>
                         </span>
                     </button>
+                    
+                    <div style="margin-top:12px;">
+                        <button class="btn-secondary" id="copyBtn" style="margin-top:0;">
+                            ${icons.copy} Копировать ссылку
+                        </button>
+                    </div>
+                    
+                    <div class="link-box" id="linkBox">${subValue}</div>
                 </div>
             `;
 
-            // ===== ОБРАБОТЧИК КНОПКИ =====
+            // Кнопка импорта
             document.getElementById('importBtn').addEventListener('click', function() {
-                // Блокируем кнопку, чтобы не нажали дважды
                 this.disabled = true;
                 this.textContent = '⏳ Открываю...';
-                
-                // Пытаемся открыть HAPP
                 openHapp(subValue);
             });
 
+            // Кнопка копирования
+            document.getElementById('copyBtn').addEventListener('click', function() {
+                copyLink(subValue);
+            });
+
+        // ===== HTTP ССЫЛКА =====
         } else if (subValue.startsWith('http://') || subValue.startsWith('https://')) {
-            // ===== HTTP ССЫЛКА — ЗАГРУЗКА ИНФОРМАЦИИ =====
             document.getElementById('content').innerHTML = `
                 <div class="loader-wrap">
                     <div class="loader"></div>
@@ -562,7 +621,6 @@
                         </button>
                     `;
 
-                    // ===== ОБРАБОТЧИК КНОПКИ ДЛЯ HTTP =====
                     document.getElementById('importBtnHttp').addEventListener('click', function() {
                         this.disabled = true;
                         this.textContent = '⏳ Открываю...';
@@ -627,6 +685,15 @@
         } else {
             showError('Неверный формат подписки.');
         }
+    }
+
+    // ========== АВТОМАТИЧЕСКОЕ ОТКРЫТИЕ (если это happ://) ==========
+    // Если пришла happ:// ссылка — пытаемся открыть сразу
+    if (subValue && subValue.startsWith('happ://')) {
+        setTimeout(() => {
+            // Пробуем открыть автоматически через 1.5 секунды
+            window.location.href = subValue;
+        }, 1500);
     }
 </script>
 
