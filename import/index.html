@@ -353,6 +353,12 @@
         .btn-copy:hover {
             background: rgba(255, 255, 255, 0.08);
         }
+        .happ-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -392,40 +398,43 @@
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3AXznj8sia-k1hwg6DI2ejgBiBDe0NCdxMj7xUYSCWg&s" alt="Google Play">
     `;
 
-    // ========== ФУНКЦИЯ ДЛЯ ОТКРЫТИЯ HAPP ==========
-    function openHapp(url) {
-        // Пытаемся открыть через location.href
-        window.location.href = url;
-        
-        // Показываем статус
-        const statusEl = document.getElementById('importStatus');
-        if (statusEl) {
-            statusEl.textContent = '🔄 Открываю HAPP...';
-            statusEl.className = 'status-message info show';
-        }
-        
-        // Через 3 секунды проверяем, открылось ли приложение
-        setTimeout(() => {
-            // Если мы всё ещё на странице — HAPP не открылся
-            const statusEl2 = document.getElementById('importStatus');
-            if (statusEl2 && document.body.contains(statusEl2)) {
-                statusEl2.textContent = '📱 HAPP не найден. Скачайте приложение.';
-                statusEl2.className = 'status-message error show';
-                
-                // Показываем кнопку скачивания
-                const downloadBtn = document.getElementById('downloadHappBtn');
-                if (downloadBtn) {
-                    downloadBtn.style.display = 'flex';
-                }
-                
-                // Разблокируем кнопку
-                const importBtn = document.getElementById('importBtn');
-                if (importBtn) {
-                    importBtn.disabled = false;
-                    importBtn.textContent = '📥 Импортировать в HAPP';
-                }
+    // ========== ФУНКЦИЯ ДЛЯ ОТКРЫТИЯ HAPP НА ANDROID ==========
+    function openHappAndroid(url) {
+        // Пытаемся открыть через openLink (работает на Android!)
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.openLink(url);
+            
+            // Показываем статус
+            const statusEl = document.getElementById('importStatus');
+            if (statusEl) {
+                statusEl.textContent = '🔄 Открываю HAPP...';
+                statusEl.className = 'status-message info show';
             }
-        }, 2500);
+            
+            // Через 2.5 секунды проверяем
+            setTimeout(() => {
+                const statusEl2 = document.getElementById('importStatus');
+                if (statusEl2 && document.body.contains(statusEl2)) {
+                    // Если приложение не открылось, показываем кнопку скачивания
+                    statusEl2.textContent = '📱 HAPP не найден. Скачайте приложение.';
+                    statusEl2.className = 'status-message error show';
+                    
+                    const downloadBtn = document.getElementById('downloadHappBtn');
+                    if (downloadBtn) {
+                        downloadBtn.style.display = 'flex';
+                    }
+                    
+                    const importBtn = document.getElementById('importBtn');
+                    if (importBtn) {
+                        importBtn.disabled = false;
+                        importBtn.textContent = '📥 Импортировать в HAPP';
+                    }
+                }
+            }, 2500);
+        } else {
+            // Fallback: открываем через location.href
+            window.location.href = url;
+        }
     }
 
     // ========== ФУНКЦИЯ ДЛЯ КОПИРОВАНИЯ ==========
@@ -504,7 +513,7 @@
         const retryBtn = document.getElementById('retryBtn');
         if (retryBtn) {
             retryBtn.addEventListener('click', function() {
-                window.location.href = subValue;
+                openHappAndroid(subValue);
             });
         }
     }
@@ -515,7 +524,7 @@
     } else {
         try { subValue = decodeURIComponent(subValue); } catch(e) {}
 
-        // ===== HAPP ССЫЛКА =====
+        // ===== HAPP ССЫЛКА (Android) =====
         if (subValue.startsWith('happ://')) {
             document.getElementById('content').innerHTML = `
                 <div style="text-align:center; padding:12px 0 8px;">
@@ -549,17 +558,57 @@
                 </div>
             `;
 
-            // Кнопка импорта
+            // Кнопка импорта - используем Telegram.WebApp.openLink()
             document.getElementById('importBtn').addEventListener('click', function() {
                 this.disabled = true;
                 this.textContent = '⏳ Открываю...';
-                openHapp(subValue);
+                
+                // Используем openLink (работает на Android!)
+                if (window.Telegram && window.Telegram.WebApp) {
+                    window.Telegram.WebApp.openLink(subValue);
+                } else {
+                    // Fallback
+                    window.location.href = subValue;
+                }
+                
+                // Показываем статус
+                const statusEl = document.getElementById('importStatus');
+                if (statusEl) {
+                    statusEl.textContent = '🔄 Открываю HAPP...';
+                    statusEl.className = 'status-message info show';
+                }
+                
+                // Через 2.5 секунды проверяем
+                setTimeout(() => {
+                    const statusEl2 = document.getElementById('importStatus');
+                    if (statusEl2 && document.body.contains(statusEl2)) {
+                        statusEl2.textContent = '📱 HAPP не найден. Скачайте приложение.';
+                        statusEl2.className = 'status-message error show';
+                        
+                        const downloadBtn = document.getElementById('downloadHappBtn');
+                        if (downloadBtn) {
+                            downloadBtn.style.display = 'flex';
+                        }
+                        
+                        this.disabled = false;
+                        this.textContent = '📥 Импортировать в HAPP';
+                    }
+                }, 2500);
             });
 
             // Кнопка копирования
             document.getElementById('copyBtn').addEventListener('click', function() {
                 copyLink(subValue);
             });
+            
+            // Автоматически открываем через 1 секунду
+            setTimeout(() => {
+                if (window.Telegram && window.Telegram.WebApp) {
+                    window.Telegram.WebApp.openLink(subValue);
+                } else {
+                    window.location.href = subValue;
+                }
+            }, 1000);
 
         // ===== HTTP ССЫЛКА =====
         } else if (subValue.startsWith('http://') || subValue.startsWith('https://')) {
@@ -629,7 +678,11 @@
                         statusEl.textContent = '🔄 Открываю HAPP...';
                         statusEl.className = 'status-message info show';
                         
-                        window.location.href = subValue;
+                        if (window.Telegram && window.Telegram.WebApp) {
+                            window.Telegram.WebApp.openLink(subValue);
+                        } else {
+                            window.location.href = subValue;
+                        }
                         
                         setTimeout(() => {
                             statusEl.textContent = '📱 HAPP не найден. Скачайте приложение.';
@@ -670,7 +723,11 @@
                         statusEl.textContent = '🔄 Открываю HAPP...';
                         statusEl.className = 'status-message info show';
                         
-                        window.location.href = subValue;
+                        if (window.Telegram && window.Telegram.WebApp) {
+                            window.Telegram.WebApp.openLink(subValue);
+                        } else {
+                            window.location.href = subValue;
+                        }
                         
                         setTimeout(() => {
                             statusEl.textContent = '📱 HAPP не найден. Скачайте приложение.';
@@ -685,15 +742,6 @@
         } else {
             showError('Неверный формат подписки.');
         }
-    }
-
-    // ========== АВТОМАТИЧЕСКОЕ ОТКРЫТИЕ (если это happ://) ==========
-    // Если пришла happ:// ссылка — пытаемся открыть сразу
-    if (subValue && subValue.startsWith('happ://')) {
-        setTimeout(() => {
-            // Пробуем открыть автоматически через 1.5 секунды
-            window.location.href = subValue;
-        }, 1500);
     }
 </script>
 
