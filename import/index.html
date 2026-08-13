@@ -136,14 +136,14 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             background: #1a1a2e;
             color: #fff;
             text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 14px;
+            padding: 10px 16px;
+            border-radius: 12px;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
             transition: all 0.2s ease;
             border: 1px solid rgba(255, 255, 255, 0.06);
             cursor: pointer;
@@ -160,9 +160,10 @@
             align-items: center;
             justify-content: center;
         }
-        .google-play-btn .gp-logo svg {
+        .google-play-btn .gp-logo img {
             width: 28px;
             height: 28px;
+            object-fit: contain;
         }
         .google-play-btn .btn-text {
             display: flex;
@@ -317,11 +318,6 @@
             color: rgba(255, 255, 255, 0.12);
             letter-spacing: 0.5px;
         }
-        
-        .mt-8 { margin-top: 8px; }
-        .mt-12 { margin-top: 12px; }
-        .text-center { text-align: center; }
-        .text-muted { color: rgba(255, 255, 255, 0.3); font-size: 13px; }
     </style>
 </head>
 <body>
@@ -353,26 +349,6 @@
         status: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>`
     };
 
-    // Google Play Logo - упрощенный и гарантированно работающий
-    const googlePlayLogo = `
-        <svg viewBox="0 0 512 512" width="28" height="28">
-            <path d="M48 464L368 144L48 464z" fill="#34A853"/>
-            <path d="M48 464L368 144L48 464z" fill="#EA4335" transform="scale(-1,1) translate(-512,0)"/>
-            <path d="M48 464L288 224L48 464z" fill="#4285F4"/>
-            <path d="M48 464L288 224L48 464z" fill="#34A853" transform="scale(-1,1) translate(-512,0)"/>
-            <path d="M48 464L288 224L48 464z" fill="#FBBC04"/>
-            <path d="M48 464L288 224L48 464z" fill="#EA4335"/>
-            <path d="M48 464L288 224L48 464z" fill="#34A853" transform="scale(-1,1) translate(-512,0)"/>
-            <path d="M48 464L288 224L48 464z" fill="#4285F4"/>
-            <path d="M48 464L288 224L48 464z" fill="#FBBC04" transform="scale(-1,1) translate(-512,0)"/>
-            <path d="M48 464L288 224L48 464z" fill="#EA4335"/>
-            <path d="M48 464L288 224L48 464z" fill="#34A853" transform="scale(-1,1) translate(-512,0)"/>
-            <path d="M48 464L288 224L48 464z" fill="#4285F4"/>
-            <path d="M48 464L288 224L48 464z" fill="#FBBC04" transform="scale(-1,1) translate(-512,0)"/>
-            <path d="M48 464L288 224L48 464z" fill="#EA4335"/>
-        </svg>
-    `;
-
     function showError(message) {
         document.getElementById('content').innerHTML = `
             <div class="error-box">
@@ -398,7 +374,9 @@
 
             <a href="https://play.google.com/store/apps/details?id=com.happproxy" 
                class="google-play-btn" target="_blank">
-                <span class="gp-logo">${googlePlayLogo}</span>
+                <span class="gp-logo">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3AXznj8sia-k1hwg6DI2ejgBiBDe0NCdxMj7xUYSCWg&s" alt="Google Play">
+                </span>
                 <span class="btn-text">
                     <span class="small">Доступно в</span>
                     <span class="big">Google Play</span>
