@@ -30,23 +30,22 @@
             text-align: center;
         }
         
-        /* Logo */
+        /* Логотип PC2 VPN */
         .logo-wrap {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 16px;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 12px;
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.35);
             overflow: hidden;
-            background: #fff;
+            background: transparent;
         }
         .logo-wrap img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
         
         h1 {
@@ -157,6 +156,13 @@
             width: 28px;
             height: 28px;
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .google-play-btn .gp-logo svg {
+            width: 28px;
+            height: 28px;
         }
         .google-play-btn .btn-text {
             display: flex;
@@ -292,15 +298,16 @@
             font-weight: 400;
         }
         
-        /* Happ logo in card */
+        /* Happ logo in card - только здесь */
         .happ-logo-small {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
             margin: 0 auto 12px;
             display: block;
             background: #fff;
-            padding: 4px;
+            padding: 6px;
+            object-fit: contain;
         }
         
         /* Footer */
@@ -320,9 +327,9 @@
 <body>
 
 <div class="container">
-    <!-- Logo -->
+    <!-- Логотип PC2 VPN -->
     <div class="logo-wrap">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpat9S_dAeH4hCbL0_ijD7nDuJ6Swas51xV1XJSu02ew&s" alt="HAPP Logo">
+        <img src="https://he02-asc.c6t.ru/logo.png" alt="PC2 VPN">
     </div>
     <h1>PC2 VPN</h1>
     <p class="subtitle">Импорт подписки для Pixel Combats 2</p>
@@ -346,23 +353,23 @@
         status: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>`
     };
 
-    // Google Play SVG logo
+    // Google Play Logo - упрощенный и гарантированно работающий
     const googlePlayLogo = `
-        <svg class="gp-logo" viewBox="0 0 512 512">
-            <path fill="#34A853" d="M48 464L368 144L48 464z"/>
-            <path fill="#EA4335" d="M48 464L368 144L48 464z" transform="scale(-1,1) translate(-512,0)"/>
-            <path fill="#4285F4" d="M48 464L288 224L48 464z"/>
-            <path fill="#34A853" d="M48 464L288 224L48 464z" transform="scale(-1,1) translate(-512,0)"/>
-            <path fill="#FBBC04" d="M48 464L288 224L48 464z"/>
-            <path fill="#EA4335" d="M48 464L288 224L48 464z"/>
-            <path fill="#34A853" d="M48 464L288 224L48 464z" transform="scale(-1,1) translate(-512,0)"/>
-            <path fill="#4285F4" d="M48 464L288 224L48 464z"/>
-            <path fill="#FBBC04" d="M48 464L288 224L48 464z" transform="scale(-1,1) translate(-512,0)"/>
-            <path fill="#EA4335" d="M48 464L288 224L48 464z"/>
-            <path fill="#34A853" d="M48 464L288 224L48 464z" transform="scale(-1,1) translate(-512,0)"/>
-            <path fill="#4285F4" d="M48 464L288 224L48 464z"/>
-            <path fill="#FBBC04" d="M48 464L288 224L48 464z" transform="scale(-1,1) translate(-512,0)"/>
-            <path fill="#EA4335" d="M48 464L288 224L48 464z"/>
+        <svg viewBox="0 0 512 512" width="28" height="28">
+            <path d="M48 464L368 144L48 464z" fill="#34A853"/>
+            <path d="M48 464L368 144L48 464z" fill="#EA4335" transform="scale(-1,1) translate(-512,0)"/>
+            <path d="M48 464L288 224L48 464z" fill="#4285F4"/>
+            <path d="M48 464L288 224L48 464z" fill="#34A853" transform="scale(-1,1) translate(-512,0)"/>
+            <path d="M48 464L288 224L48 464z" fill="#FBBC04"/>
+            <path d="M48 464L288 224L48 464z" fill="#EA4335"/>
+            <path d="M48 464L288 224L48 464z" fill="#34A853" transform="scale(-1,1) translate(-512,0)"/>
+            <path d="M48 464L288 224L48 464z" fill="#4285F4"/>
+            <path d="M48 464L288 224L48 464z" fill="#FBBC04" transform="scale(-1,1) translate(-512,0)"/>
+            <path d="M48 464L288 224L48 464z" fill="#EA4335"/>
+            <path d="M48 464L288 224L48 464z" fill="#34A853" transform="scale(-1,1) translate(-512,0)"/>
+            <path d="M48 464L288 224L48 464z" fill="#4285F4"/>
+            <path d="M48 464L288 224L48 464z" fill="#FBBC04" transform="scale(-1,1) translate(-512,0)"/>
+            <path d="M48 464L288 224L48 464z" fill="#EA4335"/>
         </svg>
     `;
 
@@ -382,7 +389,7 @@
         document.getElementById('content').innerHTML = `
             <div class="card" style="text-align:center; padding:24px 16px;">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpat9S_dAeH4hCbL0_ijD7nDuJ6Swas51xV1XJSu02ew&s" 
-                     alt="HAPP" class="happ-logo-small" style="width:56px;height:56px;border-radius:14px;background:#fff;padding:6px;margin:0 auto 12px;display:block;">
+                     alt="HAPP" class="happ-logo-small">
                 <p style="color:rgba(255,255,255,0.7); font-size:15px; line-height:1.5;">
                     У вас не установлено приложение <strong>HAPP</strong>.<br>
                     Оно необходимо для импорта подписки.
@@ -391,7 +398,7 @@
 
             <a href="https://play.google.com/store/apps/details?id=com.happproxy" 
                class="google-play-btn" target="_blank">
-                ${googlePlayLogo}
+                <span class="gp-logo">${googlePlayLogo}</span>
                 <span class="btn-text">
                     <span class="small">Доступно в</span>
                     <span class="big">Google Play</span>
@@ -420,8 +427,6 @@
         if (subValue.startsWith('happ://')) {
             document.getElementById('content').innerHTML = `
                 <div style="text-align:center; padding:12px 0 8px;">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpat9S_dAeH4hCbL0_ijD7nDuJ6Swas51xV1XJSu02ew&s" 
-                         alt="HAPP" style="width:56px;height:56px;border-radius:14px;background:#fff;padding:6px;margin:0 auto 12px;display:block;">
                     <p style="color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:16px;">
                         Нажмите кнопку, чтобы импортировать подписку
                     </p>
